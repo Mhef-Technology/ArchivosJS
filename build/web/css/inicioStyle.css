@@ -1,0 +1,321 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,body{
+    min-width: 1100px;
+}
+
+.navbar{
+    background-color: #3278AB;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #3278AB;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+.navbar li {
+    float: left;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.navbar li a {
+    display: flex;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    align-items: center;
+}
+
+.navbar li a:hover {
+    text-decoration: underline;
+}
+.perfil{
+    border-radius: 25px;
+}
+
+.texto1{
+    margin-top: 70px;
+    padding: 10px 30px;
+}
+.texto2{
+    background-color: #699BF7;
+    padding: 0 40px;
+}
+.container{
+    width: 100%;
+    height: auto;
+    position: relative;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.arrow{
+    width: 30px;
+    height: 30px;
+    padding: 2px;
+    position: absolute;
+    bottom: calc(50% - 10px);
+    z-index: 3;
+    cursor: pointer;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 30px;
+    background-color: rgba(255, 255, 255, 0.58);
+    transition: opacity 0.5s ease;
+}
+#left-arrow{
+    left: calc(50% - 130px);
+}
+#right-arrow{
+    right: calc(50% - 130px);
+}
+.slider{
+    width: 100%;
+    height: auto;
+    /* We need a padding left 
+    so that the elements will be centered at all times*/
+    padding-left: 40%;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    overflow-y: hidden ;
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+}
+.slider::-webkit-scrollbar{
+    display: none;
+}
+.box{
+    /* scroll-snap-align is very important
+    , it will help us figure out where is the center of every box*/
+    scroll-snap-align: center;
+    width: 300px;
+    /* Important!! min-width tells my slider it can not
+     resize my elements to fit, it has to do scroll*/
+    min-width: 300px;
+    height: 380px;
+    margin: 15px;
+    padding: 35px;
+    position: relative;
+    z-index: 1;
+    border-radius: 8px;
+    box-shadow: 2px 4px 8px rgb(89 73 100);
+    background-color: #FFED85;
+    transition: opacity 0.3s ease-in;
+    opacity: 0.5;
+}
+#center{
+    opacity: 1;
+}
+
+.dummy{
+    min-width: 70%;
+    scroll-snap-align: none;
+    visibility: hidden;
+}
+
+.nomP, .nomF, .nomC{
+    padding: 10px;
+}
+.nomP h4, .nomF h4, .nomC h4{
+    font-size: 18px;
+}
+.imagP img, .imagF img, .imagC img{
+    border-bottom-left-radius: 11px;
+    border-top-left-radius: 11px;
+}
+.imagP{
+    grid-area: imgp;
+}
+.nomP{
+    grid-area: nomp;
+    display: flex;
+    align-items: center;
+}
+.imagF{
+    grid-area: imgf;
+}
+.nomF{
+    grid-area: nomf;
+    display: flex;
+    align-items: center;
+}
+.imagC{
+    grid-area: imgc;
+}
+.nomC{
+    grid-area: nomc;
+    display: flex;
+    align-items: center;
+}
+.titleP, .titleF, .titleC{
+    display: grid;
+    border: 4px #fff solid;
+    border-radius: 15px;
+    height: 123px;
+    margin-bottom: 55px;
+}
+.titleP{
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        "imgp nomp";
+}
+.titleF{
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        "imgf nomf";
+}
+.titleC{
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        "imgc nomc";
+}
+.infoP, .infoF, .infoC{
+    background-color: rgba(0,0,0,.4);
+    margin: 30px 0;
+    padding: 10px 10px;
+    border-radius: 10px;
+}
+.empezarP, .empezarF, .empezarC{
+    background-color: rgba(0,0,0,.4);
+    margin: 30px 0;
+    padding: 10px 12px;
+    border-radius: 10px;
+}
+.box a{
+    display: flex;
+    color: white;
+    text-decoration: none;
+    align-items: center;
+}
+
+.box a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    background-color: #3278AB;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    font-size: 15px;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 0;
+    padding: 0 16px;
+}
+
+footer a:hover {
+    color: #ff9900;
+}
+
+.subir{
+    background-color: #326192;
+    padding: 15px 0;
+    font-size: 18px;
+}
+
+footer p{
+    padding: 16px 0;
+}
+
+.leftfooter{
+    grid-area: left;
+    padding-left: 15px;
+    border-right: 1px #fff solid;
+}
+.centerfooter{
+    grid-area: center;
+    padding-left: 15px;
+    border-right: 1px #fff solid;
+}
+.rightfooter{
+    grid-area: right;
+    padding-left: 15px;
+}
+.containfooter{
+    display: grid;
+    text-align: justify;
+    margin-left: 22%;
+    margin-right: 22%;
+    margin-top: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        "left center right";
+    border-top: 1px #fff solid;
+    border-bottom: 1px #fff solid;
+}
+.containfooter ul{
+    list-style: none;
+    list-style-type: none;
+    padding: 0;
+    margin-left: 0;
+}
+.containfooter ul li a{
+    list-style: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.containfooter .rightfooter ul li p{
+    padding: 0;
+    margin: 0;
+}
+.containfooter .rightfooter ul li .numero{
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+.aboutus, .help, .contact{
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+.socialNetworks{
+    display: grid;
+    text-align: center;
+    padding: 0 5px;
+    margin-left: 30%;
+    margin-right: 30%;
+    border-bottom: 1px #fff solid;
+}
+
+.socialNetworks ul{
+    list-style: none;
+}
+.socialNetworks ul a{
+    color: white;
+    font-size: 45px;
+    display: inline-block;
+    margin: 5px;
+    transition: all 0.5s ease-in-out;
+}
+.socialNetworks ul a:hover{
+    color: #F7FF33;
+    transform: scale(1.1);
+}
