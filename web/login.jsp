@@ -44,9 +44,10 @@
             sesion.setAttribute("tipo", null);
             sesion.setAttribute("usu", null);
             if (request.getParameter("boton-continuar") != null) {
+                request.setAttribute("boton-continuar", null);
                 if (request.getParameter("username").equals("") || request.getParameter("password").equals("")) {
                     out.println("<script>alert('Llene todos los campos')</script>");
-                } else {
+                } else if (sesion.getAttribute("tipo") == null && sesion.getAttribute("usu") == null){
                     Connection con = null;
                     ResultSet rst = null;
                     PreparedStatement pstmt = null;
@@ -73,7 +74,7 @@
         %>
         <script src='js/borrarCuadros.js'></script>
         <%
-                        response.sendRedirect("inicio.html");
+                        response.sendRedirect("inicio.jsp");
                     } else {
         %>
         <script>alert('Usuario no encontrado');</script>

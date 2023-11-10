@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -9,16 +10,23 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     </head>
     <body id="box">
+        <%
+            HttpSession sesion = request.getSession();
+            String usuario = sesion.getAttribute("usu").toString();
+            String tipo = sesion.getAttribute("tipo").toString();
+        %>
         <div class="navbar">
-            <ul>
-                <li><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></li>
-                <li><a href="#perfil"><img src="img/predeterminado.jpeg" width="50" alt="logoMeksh" class="perfil" style="margin-left: 10px; margin-right: 10px;"/>Perfil</a></li>
-                <li><a href="#logros">Logros</a></li>
-                <li><a href="#amigos">Amigos</a></li>
-                <li><a href="#racha">Estatus</a></li>
-                <li><a href="#ajustes">Configuración</a></li>
-                <li><a href="#logout">Cerrar sesión</a></li>
-            </ul>
+            <form action="" method="post">
+                <ul>
+                    <li><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></li>
+                    <li><a href="perfil.jsp"><img src="img/predeterminado.jpeg" width="50" alt="logoMeksh" class="perfil" style="margin-left: 10px; margin-right: 10px;"/><p id="usuario"><%=usuario%></p></a></li>
+                    <li><a href="#logros">Logros</a></li>
+                    <li><a href="#amigos">Amigos</a></li>
+                    <li><a href="#estatus">Estatus</a></li>
+                    <li><a href="#ajustes">Configuración</a></li>
+                    <li><a href="inicio.jsp?logout=1">Cerrar sesión</a></li>
+                </ul>
+            </form>
         </div>
         <div class="texto1">
             <h1>Métodos de estudio</h1>
@@ -126,5 +134,15 @@
             <p>&copy; 2023 Mhef Technology. Todos los derechos reservados</p>
         </footer>
         <script type="text/javascript" src="js/infoMetodos.js"></script>
+        <%
+            if (request.getParameter("logout") != null) {
+                sesion.setAttribute("tipo", null);
+                sesion.setAttribute("usu", null);
+                usuario = null;
+                tipo = null;
+                out.println("<script>document.getElementById('usuario').value = '';</script>");
+                response.sendRedirect("login.jsp");
+            }
+        %>
     </body>
 </html>

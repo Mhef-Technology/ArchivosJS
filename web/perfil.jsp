@@ -1,32 +1,41 @@
 <!DOCTYPE html>
-<html id="box">
+<html lang="en">
     <head>
-        <title>Mhef Technology - Inicio</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/principal.css">
+        <link rel="stylesheet" href="css/perfilStyle.css">
         <link rel="stylesheet" href="ruta/a/font-awesome.min.css"> <!-- Si has descargado los archivos localmente -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <title>Meksh - Perfil</title>
     </head>
     <body>
-        <div class="navbar">
-            <ul>
-                <li><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 10px;"/></li>
-                <li><a href="login.jsp">Ir a Meksh</a></li>
-                <li><a href="http://mhef.gerdoc.com/">Â¿QuiÃ©nes somos?</a></li>
-                <li><a href="#contacto">Contacto</a></li>
-            </ul>
-        </div>
-        <section class="box">
-            <a href="acercade.html"><img src="img/Logo.jpeg" width="150" alt=""/></a>
-            <h1>Mhef Technology</h1>
-            <p> En nuestra empresa se realizan los proyectos de software de manera colaborativa entre los
-                miembros de Ã©sta. AdemÃ¡s, nuestra empresa estÃ¡ abierta a colaborar con otras de ser necesario
-                y de obtener un beneficio mutuo. Somos una empresa que busca posicionarse en el mercado, compitiendo
-                con las demÃ¡s empresas de manera sana e Ã­ntegra. El cliente siempre va a tener la seguridad de que la 
-                empresa cumplirÃ¡ con los software solicitados, cumpliendo con todos los requerimientos establecidos.
-            </p>
-        </section>
+        <header>
+            <div class="navbar">
+                <ul>
+                    <li><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></li>
+                    <li><a href="#logros">Logros</a></li>
+                    <li><a href="#amigos">Amigos</a></li>
+                    <li><a href="#racha">Estatus</a></li>
+                    <li><a href="#ajustes">Configuración</a></li>
+                    <li><a href="#logout">Cerrar sesión</a></li>
+                </ul>
+            </div>
+        </header>
+        <main>
+            <section class="box">
+                <div class="profile">
+                    <div class="banner">
+                       
+                    </div>
+                    <div class="avatar" style="background-image: url('https://img.wattpad.com/cover/240539622-288-k854048.jpg');">
+                    </div>
+                    <div class="content">
+                       
+                    </div>
+                    
+                </div>
+            </section>
+        </main>
         <footer>
             <div class="subir">
                 <a href="#box">Ir al principio</a>
@@ -35,13 +44,13 @@
                 <div class="containfooter">
                     <div class="bordeizq"></div>
                     <div class="leftfooter">
-                        <div class="aboutus">ConÃ³cenos</div>
+                        <div class="aboutus">Conócenos</div>
                         <ul>
-                            <li><a href="#mision">MisiÃ³n</a></li>
-                            <li><a href="#vision">VisiÃ³n</a></li>
+                            <li><a href="#mision">Misión</a></li>
+                            <li><a href="#vision">Visión</a></li>
                             <li><a href="#objetivos">Objetivos</a></li>
-                            <li><a href="#politicas">PolÃ­ticas</a></li>
-                            <li><a href="#filosofia">FilosofÃ­a</a></li>
+                            <li><a href="#politicas">Políticas</a></li>
+                            <li><a href="#filosofia">Filosofía</a></li>
                             <li><a href="#valores">Valores</a></li>
                         </ul>
                     </div>
@@ -49,17 +58,17 @@
                         <div class="help">Ayuda</div>
                     </div>
                     <div class="rightfooter">
-                        <div class="contact" id="contacto">Contacto</div>
+                        <div class="contact">Contacto</div>
                         <ul>
-                            <li><p>TelÃ©fono:</p></li>
+                            <li><p>Teléfono:</p></li>
                             <li><p class="numero">5503923923</p></li>
-                            <li><p>Correo electrÃ³nico:</p></li>
+                            <li><p>Correo electrónico:</p></li>
                             <li><p>mhef.technology@gmail.com</p></li>
                         </ul>
                     </div>
                 </div>
             </nav>
-            <div class="socialNetworks" >
+            <div class="socialNetworks">
                 <ul>
                     <li>
                         <a href="https://www.facebook.com/profile.php?id=61550922583788&mibextid=ZbWKwL"><i class="fa-brands fa-square-facebook"></i></a>

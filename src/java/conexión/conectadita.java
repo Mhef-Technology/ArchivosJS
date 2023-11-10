@@ -9,7 +9,7 @@ public class conectadita {
             cnx = DriverManager.getConnection ("jdbc:mysql://localhost:3308/Meksh?autoReconnect=true&useSSL=false",  "root",  "n0m3l0");
         }
         catch (ClassNotFoundException | SQLException error) {
-            out.print(error.toString());
+            out.print("<script>alert('Error al conectar con la base de datos')</script>");
         }
         return cnx;
     }
