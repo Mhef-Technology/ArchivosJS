@@ -7,7 +7,7 @@ public class conectadita implements Serializable{
 
     public static String user = "root";
     public static String password = "1234";
-    public static String db = "Bitcube";
+    public static String db = "Meksh";
     public static String port = "3306";
 
     public boolean testDriver() {
