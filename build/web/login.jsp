@@ -54,7 +54,7 @@
                     String username = request.getParameter("username");
                     String password = request.getParameter("password");
                     conectadita conect = new conectadita();
-                    con = conect.conectar();
+                    con = conect.getConnection();
                     pstmt = con.prepareCall("select * from Usuario where nombre_Usuario = ? and contraseña = ?;");
                     pstmt.setString(1, username);
                     pstmt.setString(2, password);

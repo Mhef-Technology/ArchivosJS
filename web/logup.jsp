@@ -81,7 +81,7 @@
             String password2 = request.getParameter("password2");
             if (password.equals(password2)) {
                 conectadita conect = new conectadita();
-                Connection con = conect.conectar();
+                Connection con = conect.getConnection();
                 PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Usuario WHERE nombre_Usuario = ?;");
                 pstmt.setString(1, username);
                 ResultSet rst = pstmt.executeQuery();
