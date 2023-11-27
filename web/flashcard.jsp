@@ -43,7 +43,7 @@
     <%
         }
 
-        pstmt = con.prepareStatement("select * from vw_selectCards where nombre_Usuario = ? and nombre_Conjunto = ? and pregunta_Tarjeta = ?");
+        pstmt = con.prepareStatement("select * from Usuario inner join Conjunto on Usuario.idUsuario = Conjunto.idUsuario inner join Tarjeta on Conjunto.idConjunto = Tarjeta.idConjunto where nombre_Usuario = ? and nombre_Conjunto = ? and pregunta_Tarjeta = ?");
         pstmt.setString(1, usuario);
         pstmt.setString(2, conjunto);
         pstmt.setString(3, tarjeta);

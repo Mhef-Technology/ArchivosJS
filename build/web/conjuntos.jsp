@@ -60,7 +60,7 @@
         <%
             }
 
-            pstmt = con.prepareStatement("select * from vw_searchSets where nombre_Usuario = ?");
+            pstmt = con.prepareStatement("select *, date_format(fechaCreacion_Conjunto, '%d-%m-%Y') fechaCreacionConjunto, date_format(ultimaModificacion_Conjunto, '%d:%m:%Y') fechaUltimaModifConjunto, time_format(ultimaModificacion_Conjunto, '%H:%i:%s') horaUltimaModifConjunto from Usuario inner join Conjunto on Usuario.idUsuario = Conjunto.idUsuario where nombre_Usuario = ?");
             pstmt.setString(1, usuario);
             rst = pstmt.executeQuery();
         %>

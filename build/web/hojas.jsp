@@ -62,7 +62,7 @@
         <%
             }
 
-            pstmt = con.prepareStatement("select * from vw_searchSheets where nombre_Usuario = ?");
+            pstmt = con.prepareStatement("select *, date_format(fechaCreacion_Hoja, '%d-%m-%Y') fechaCreacionHoja, date_format(ultimaModificacion_Hoja, '%d:%m:%Y') fechaUltimaModifHoja, time_format(ultimaModificacion_Hoja, '%H:%i:%s') horaUltimaModifHoja from Usuario inner join Hoja on Usuario.idUsuario = Hoja.idUsuario where nombre_Usuario = ?");
             pstmt.setString(1, usuario);
             rst = pstmt.executeQuery();
         %>

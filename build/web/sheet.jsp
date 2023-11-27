@@ -46,7 +46,7 @@
     <%
         }
 
-        pstmt = con.prepareStatement("select * from vw_selectSheets where nombre_Usuario = ? and nombre_Hoja = ?");
+        pstmt = con.prepareStatement("select * from Usuario inner join Hoja on Usuario.idUsuario = Hoja.idUsuario where nombre_Usuario = ? and nombre_Hoja = ?");
         pstmt.setString(1, usuario);
         pstmt.setString(2, hoja);
         rst = pstmt.executeQuery();
