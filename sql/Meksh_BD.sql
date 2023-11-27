@@ -335,37 +335,3 @@ insert into Logro values(4, 'Rápidamente Sabio', '¡Sigue aprendiendo, no pares
 #Pruebas
 call sp_agregarBase('Ferna', 'fer@gmail.com', '1234.Fer');
 call sp_agregarBase('Nateyla', 'nataponi276@gmail.com', 'Luchito_4');
-
-select * from vw_searchAwards where nombre_Usuario = "Ferna";
-select * from vw_searchSets where nombre_Usuario = "Ferna";
-select * from vw_searchCards where nombre_Usuario = "Ferna" and nombre_Conjunto = "Conjunto1";
-select * from vw_selectCards where nombre_Usuario = "Ferna" and nombre_Conjunto = "Conjunto1" and pregunta_Tarjeta = "Pregunta 1";
-select * from vw_searchSheets where nombre_Usuario = "Ferna";
-select * from vw_selectSheets where nombre_Usuario = "Ferna" and nombre_Hoja = "Hoja1";
-
-delete from Conjunto;
-insert into Conjunto values(1, 1, 'Conjunto1', current_date(), current_date());
-insert into Conjunto values(2, 1, 'Conjunto2', current_time(), current_time());
-insert into Conjunto values(3, 1, 'Conjunto3', current_time(), current_time());
-insert into Conjunto values(4, 1, 'Conjunto4', current_time(), current_time());
-insert into Conjunto values(5, 1, 'Conjunto5', current_time(), current_time());
-
-delete from Tarjeta;
-insert into Tarjeta values(1, 1, "Pregunta 1", "Respuesta1");
-insert into Tarjeta values(2, 1, "Pregunta 2", "Respuesta2");
-
-delete from Hoja;
-insert into Hoja values(1, 1, 'titulo1', 'idea1', 'Notas', 'Resumen', current_date(), current_date());
-
-delete from RelPerfilLogro;
-call sp_agregarLogros('Ferna', 'Crono Prestigio');
-call sp_agregarLogros('Ferna', 'Flash-Inicia');
-call sp_agregarLogros('Ferna', 'Explorando la Creatividad');
-
-delete from Amigo;
-insert into Amigo values(1, 1, 2, current_time());
-
-call sp_actualizarTarjeta('Ferna', 'Conjunto1', 'hola', 'aquí', 'Jajajaja');
-call sp_agregarConjunto('Ferna', 'Conjunto7');
-
-call sp_actualizarHoja('Ferna', 'novotit', 'novotit2', 'novoidea', 'novonote', 'novoresume');
