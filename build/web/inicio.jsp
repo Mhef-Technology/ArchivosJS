@@ -1,32 +1,30 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.*, conexión.conectadita" %>
 <!DOCTYPE html>
-<html>
+<html id="box">
     <head>
-        <title>Meksh - Inicio</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="img/meksh-removebg-preview.png" type="image/x-icon">
         <link rel="stylesheet" href="css/inicioStyle.css">
-        <link rel="stylesheet" href="ruta/a/font-awesome.min.css"> <!-- Si has descargado los archivos localmente -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+        <title>Meksh - Home</title>
     </head>
-    <body id="box">
+    <body>
         <%
             HttpSession sesion = request.getSession();
             String usuario = sesion.getAttribute("usu").toString();
             String tipo = sesion.getAttribute("tipo").toString();
         %>
         <div class="navbar">
-            <form action="" method="post">
-                <ul>
-                    <li><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></li>
-                    <li><a href="perfil.jsp"><img src="img/predeterminado.jpeg" width="50" alt="logoMeksh" class="perfil" style="margin-left: 10px; margin-right: 10px;"/><p id="usuario"><%=usuario%></p></a></li>
-                    <li><a href="#logros">Logros</a></li>
-                    <li><a href="#amigos">Amigos</a></li>
-                    <li><a href="#estatus">Estatus</a></li>
-                    <li><a href="#ajustes">Configuración</a></li>
-                    <li><a href="inicio.jsp?logout=1">Cerrar sesión</a></li>
-                </ul>
-            </form>
+            <ul>
+                <li><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></li>
+                <li><a href="perfil.jsp"><img src="img/predeterminado.jpeg" width="50" alt="logoMeksh" class="perfil" style="margin-left: 10px; margin-right: 10px;"/><p id="usuario"><%=usuario%></p></a></li>
+                <li><a href="logros.jsp">Logros</a></li>
+                <li><a href="#amigos">Amigos</a></li>
+                <li><a href="estatus.jsp">Estatus</a></li>
+                <li><a href="inicio.jsp?logout=1">Cerrar sesión</a></li>
+            </ul>
         </div>
         <div class="texto1">
             <h1>Métodos de estudio</h1>
@@ -51,7 +49,7 @@
                         <a href="#" onclick="metodo(1)">Información sobre el método</a>
                     </div>
                     <div class="empezarP">
-                        <a href="#" onclick="">Iniciar</a>
+                        <a href="pomodoro.jsp" onclick="">Iniciar</a>
                     </div>
                 </div>
                 <div class="box center">
@@ -67,7 +65,7 @@
                         <a href="#" onclick="metodo(2)">Información sobre el método</a>
                     </div>
                     <div class="empezarF">
-                        <a href="#" onclick="">Iniciar</a>
+                        <a href="conjuntos.jsp" onclick="">Iniciar</a>
                     </div>
                 </div>
                 <div class="box">
@@ -83,7 +81,7 @@
                         <a href="#" onclick="metodo(3)">Información sobre el método</a>
                     </div>
                     <div class="empezarC">
-                        <a href="#" onclick="">Iniciar</a>
+                        <a href="hojas.jsp" onclick="">Iniciar</a>
                     </div>
                 </div>
                 <div class="box dummy"></div>
@@ -100,12 +98,12 @@
                     <div class="leftfooter">
                         <div class="aboutus">Conócenos</div>
                         <ul>
-                            <li><a href="#mision">Misión</a></li>
-                            <li><a href="#vision">Visión</a></li>
-                            <li><a href="#objetivos">Objetivos</a></li>
-                            <li><a href="#politicas">Políticas</a></li>
-                            <li><a href="#filosofia">Filosofía</a></li>
-                            <li><a href="#valores">Valores</a></li>
+                            <li><a href="http://mhef.gerdoc.com/#mision">Misión</a></li>
+                            <li><a href="http://mhef.gerdoc.com/#vision">Visión</a></li>
+                            <li><a href="http://mhef.gerdoc.com/#objetivos">Objetivos</a></li>
+                            <li><a href="http://mhef.gerdoc.com/#politicas">Políticas</a></li>
+                            <li><a href="http://mhef.gerdoc.com/#filosofia">Filosofía</a></li>
+                            <li><a href="http://mhef.gerdoc.com/#valores">Valores</a></li>
                         </ul>
                     </div>
                     <div class="centerfooter">
@@ -114,10 +112,10 @@
                     <div class="rightfooter">
                         <div class="contact">Contacto</div>
                         <ul>
-                            <li><p>Teléfono:</p></li>
-                            <li><p class="numero">5503923923</p></li>
-                            <li><p>Correo electrónico:</p></li>
-                            <li><p>mhef.technology@gmail.com</p></li>
+                            <li><p class="tit2">Teléfono:</p></li>
+                            <li><p class="numero"><i class="fa-solid fa-phone" style="color: #ffffff;"></i>5503923923</p></li>
+                            <li><p class="tit2">Correo electrónico:</p></li>
+                            <li><p><i class="fa-solid fa-envelope" style="color: #ffffff;"></i>mhef.technology@gmail.com</p></li>
                         </ul>
                     </div>
                 </div>
@@ -126,13 +124,14 @@
                 <ul>
                     <li>
                         <a href="https://www.facebook.com/profile.php?id=61550922583788&mibextid=ZbWKwL"><i class="fa-brands fa-square-facebook"></i></a>
-                        <a href="https://www.instagram.com/mhef_technology_/"><i class="fa-brands fa-square-instagram"></i></a>
+                        <a href="https://www.instagram.com/mhef_technology/"><i class="fa-brands fa-square-instagram"></i></a>
                         <a href="https://github.com/Mhef-Technology"><i class="fa-brands fa-square-github"></i></a>
                     </li>
                 </ul>
             </div>
-            <p>&copy; 2023 Mhef Technology. Todos los derechos reservados</p>
+            <p class="fin">&copy; 2023 Mhef Technology. Todos los derechos reservados</p>
         </footer>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
         <script type="text/javascript" src="js/infoMetodos.js"></script>
         <%
             if (request.getParameter("logout") != null) {

@@ -3,73 +3,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Meksh - Logup</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="img/meksh-removebg-preview.png" type="image/x-icon">
         <link rel="stylesheet" href="css/logupStyle.css">
-        <link rel="stylesheet" href="ruta/a/font-awesome.min.css"> <!-- Si has descargado los archivos localmente -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-        <script>
-            function mostrarContrasenia() {
-                var contraseniaInput = document.getElementById("password");
-                var botonMostrar = document.getElementById("mostrar-contrasenia");
-                if (contraseniaInput.type === "password") {
-                    contraseniaInput.type = "text";
-                    botonMostrar.textContent = "👁️";
-                } else {
-                    contraseniaInput.type = "password";
-                    botonMostrar.textContent = "👁️";
-                }
-            }
-            function valnomusu(e) {
-                var letritas = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_-./", x = e.which || e.keycode, letra = String.fromCharCode(x);
-                var n = letritas.indexOf(letra);
-                if (n === -1)
-                    return false;
-                else
-                    return true;
-            }
-            function valemail(e) {
-                var letritas = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.@", x = e.which || e.keycode, letra = String.fromCharCode(x);
-                var n = letritas.indexOf(letra);
-                if (n === -1)
-                    return false;
-                else
-                    return true;
-            }
-        </script>
+        <title>Meksh - Log up</title>
     </head>
-    <body>
-        <section class="box">
-            <h1>Meksh</h1>
-            <form action="logup.jsp" method="post">
-                <div class="inputbox">
-                    <input type="text" name="username" required onkeypress="return valnomusu(event)">
-                    <label>Nombre de usuario</label>
-                </div>
-                <div class="inputbox">
-                    <ion-icon name="mail-outline"></ion-icon>
-                    <input type="email" name="usermail" required onkeypress="return valemail(event)">
-                    <label>Correo electrónico</label>
-                </div>
-                <div class="inputbox">
-                    <ion-icon name="lock-closed-outline"></ion-icon>
-                    <input type="password" name="password" required>
-                    <label>Contraseña</label>
-                </div>
-                <div class="inputbox">
-                    <ion-icon name="lock-closed-outline"></ion-icon>
-                    <input type="password" name="password2" required>
-                    <label>Confirmar contraseña</label>
-                </div>
-                <button id="boton-continuar" name="boton-continuar">Continuar</button>
-            </form>
-            <p>¿Ya tienes una cuenta? <a href="login.jsp">Inicia sesión</a></p>
-        </section>
-        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    </body>
-
     <%
         HttpSession sesion = request.getSession();
         sesion.setAttribute("tipo", null);
@@ -94,25 +34,57 @@
                     cstmt.execute();
                     con.close();
     %>
-    <script>
-        alert('Registro exitoso.');
-    </script>
-    <%
-        response.sendRedirect("login.jsp");
-    } else {
-    %>
-    <script>
-        alert('El nombre de usuario ya está en uso. Por favor, elige otro nombre de usuario.');
-    </script>
-    <%
-        }
-    } else {
-    %>
-    <script>
-        alert('Las contraseñas no coinciden. Por favor, verifica tus contraseñas.');
-    </script>
-    <%
+    <body onload="metodo(6)">
+        <%
+            response.sendRedirect("login.jsp");
+        } else {
+        %>
+    <body onload="metodo(7)">
+        <%
             }
-        }
-    %>
+        } else {
+        %>
+    <body onload="metodo(8)">
+        <%
+            }
+        } else {
+        %>
+    <body>
+        <%
+            }
+        %>
+
+        <section class="box">
+            <a class="to-start" href="index.html" title="Regresar"><img src="img/darkLogo.png" height="100" alt="logoMeksh"/></a>
+            <form action="logup.jsp" method="post">
+                <div class="inputbox upp">
+                    <input type="text" name="username" required onkeypress="return valnomusu(event)">
+                    <label>Nombre de usuario</label>
+                </div>
+                <div class="inputbox">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    <input type="email" name="usermail" required onkeypress="return valemail(event)">
+                    <label>Correo electrónico</label>
+                </div>
+                <div class="inputbox">
+                    <button  type="button" class="mostrar-contrasenia" id="mostrar-contrasenia1" onclick="mostrarContraseña(1)">👁️</button><ion-icon name="lock-closed-outline"></ion-icon>
+                    <input type="password" name="password" id="password" required onkeyup="ojo(1)">
+                    <label>Contraseña</label>
+                </div>
+                <div class="inputbox downn">
+                    <button type="button" class="mostrar-contrasenia" id="mostrar-contrasenia2" onclick="mostrarContraseña(2)">👁️</button><ion-icon name="lock-closed-outline"></ion-icon>
+                    <input type="password" name="password2" id="password2" required onkeyup="ojo(2)">
+                    <label>Confirmar contraseña</label>
+                </div>
+                <div class="validar"><label class="valida"></label></div>
+                <button id="boton-continuar" name="boton-continuar">Continuar</button>
+            </form>
+            <p>¿Ya tienes una cuenta? <a href="login.jsp">Inicia sesión</a></p>
+        </section>
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
+        <script type="text/javascript" src="js/infoMetodos.js"></script>
+        <script type="text/javascript" src="js/validaciones.js"></script>
+    </body>
 </html>

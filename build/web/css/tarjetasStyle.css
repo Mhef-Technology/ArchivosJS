@@ -1,0 +1,246 @@
+/*General*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: serif;
+}
+html,body{
+    min-width: 1100px;
+}
+
+/*Barra de navegación*/
+.navbar{
+    background-color: #3278AB;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    border-bottom: 2px #326192 solid;
+}
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #3278AB;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+.navbar li {
+    float: left;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.navbar li a {
+    display: flex;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    align-items: center;
+}
+.navbar li a:hover {
+    text-decoration: underline;
+}
+.perfil{
+    border-radius: 25px;
+}
+
+/*Tarjetas*/
+.all{
+    display: flex;
+    align-items: center;
+    margin-top: 80px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+tr{
+    text-align: center;
+}
+td{
+    width: 250px;
+    height: 210px;
+    text-align: center;
+}
+.card{
+    /* scroll-snap-align is very important
+    , it will help us figure out where is the center of every box*/
+    scroll-snap-align: center;
+    width: 240px;
+    min-width: 240px;
+    height: 190px;
+    min-height: 190px;
+    margin: 15px;
+    padding: 24px;
+    position: relative;
+    z-index: 1;
+    border-radius: 8px;
+    box-shadow: 2px 4px 8px rgb(89 73 100);
+    background-color: #FFED85;
+    transition: opacity 0.3s ease-in;
+    opacity: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.add{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+.abrir{
+    text-decoration: none;
+    color: black;
+}
+.pregunta{
+    font-family: Merriweather;
+    font-size: 18px;
+}
+
+/*Pie de página*/
+footer {
+    background-color: #3278AB;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    font-size: 14px;
+}
+footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 10px 0;
+    padding: 0 16px; 
+}
+footer a:hover {
+    color: #ff9900;
+}
+.subir{
+    background-color: #326192;
+    padding: 15px 0;
+    font-size: 15px;
+}
+footer p{
+    padding: 16px 0;
+}
+.leftfooter{
+    grid-area: left;
+    padding-left: 15px;
+    border-right: 1px #fff solid;
+}
+.centerfooter{
+    grid-area: center;
+    padding-left: 15px;
+    border-right: 1px #fff solid;
+}
+.rightfooter{
+    grid-area: right;
+    padding-left: 15px;
+}
+.containfooter{
+    display: grid;
+    text-align: justify;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        "left center right";
+    border-top: 1px #fff solid;
+    border-bottom: 1px #fff solid;
+}
+.containfooter ul{
+    list-style: none;
+    list-style-type: none;
+    padding: 0;
+    margin-left: 0;
+}
+.containfooter ul li a{
+    list-style: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.containfooter .rightfooter ul li p{
+    padding: 0;
+    margin: 0;
+}
+.containfooter .rightfooter ul li .numero{
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+.aboutus, .help, .contact{
+    font-size: 14px;
+    padding-bottom: 10px;
+}
+.tit1{
+    font-size: 17px;
+    padding: 0;
+}
+.tit2{
+    font-size: 15px;
+}
+.fa-solid{
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 12px;
+}
+.socialNetworks{
+    display: grid;
+    text-align: center;
+    padding: 0 5px;
+    margin-left: 20%;
+    margin-right: 20%;
+    border-bottom: 1px #fff solid;
+}
+.socialNetworks ul{
+    list-style: none;
+}
+.socialNetworks ul a{
+    color: white;
+    font-size: 45px;
+    display: inline-block;
+    margin: 5px;
+    transition: all 0.5s ease-in-out;
+}
+.socialNetworks ul a i{
+    font-size: 45px;
+}
+.socialNetworks ul a:hover{
+    color: #F7FF33;
+    transform: scale(1.1);
+}
+footer .fin{
+    margin: 0;
+}
+@media (max-width: 1100px){
+    .containfooter{
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+}
+@media (max-width: 900px){
+    .containfooter{
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+}
+@media (max-width: 800px){
+    .containfooter{
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+}
+@media (max-width: 700px){
+    .containfooter{
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+}

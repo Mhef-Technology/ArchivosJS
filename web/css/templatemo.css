@@ -1,0 +1,83 @@
+/* Typography */
+#template-mo-zay-hero-carousel ul, #template-mo-zay-hero-carousel li, #template-mo-zay-hero-carousel p, #template-mo-zay-hero-carousel a, #template-mo-zay-hero-carousel div {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px !important;
+    font-weight: 300 !important;
+}
+#template-mo-zay-hero-carousel .h1 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 36px !important;
+    font-weight: 200 !important;
+}
+#template-mo-zay-hero-carousel b{
+    font-size: 50px !important;
+}
+#template-mo-zay-hero-carousel .text-success{
+    color:#3278AB!important
+}
+
+/* Hero Carousel */
+#template-mo-zay-hero-carousel {
+    background: #fff !important;
+    margin-top: 38px;
+}
+
+/* Product */
+#carousel-related-product .slick-slide:focus {
+    outline: none !important;
+}
+#carousel-related-product .slick-dots li button:before {
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+/* Carousel Hero */
+#template-mo-zay-hero-carousel .carousel-indicators li {
+    margin-top: -50px;
+    background-color: #3278AB;
+}
+#template-mo-zay-hero-carousel .carousel-control-next i,
+#template-mo-zay-hero-carousel .carousel-control-prev i {
+    color: #3278AB !important;
+    font-size: 2.8em !important;
+}
+
+/* Carousel Brand */
+.tempaltemo-carousel .h1 {
+    font-size: .5em !important;
+    color: #000 !important;
+}
+
+/* Services */
+.services-icon-wap {
+    transition: .3s;
+}
+.services-icon-wap:hover, .services-icon-wap:hover i {
+    color: #fff;
+}
+.services-icon-wap:hover {
+    background: #69bb7e;
+}
+@media (min-width: 576px) {
+    .tempaltemo-carousel .h1 {
+        font-size: 1em !important;
+    }
+}
+
+/*// Medium devices (tablets, 768px and up)*/
+@media (min-width: 768px) {
+    #templatemo_main_nav .navbar-nav {
+        max-width: 450px;
+    }
+}
+
+/* Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    #template-mo-zay-hero-carousel .carousel-item {
+        min-height: 30rem !important;
+    }
+}
+
+/* Extra large devices (large desktops, 1200px and up)*/
+@media (min-width: 1200px) {
+}

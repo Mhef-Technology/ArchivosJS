@@ -1,22 +1,23 @@
+/*General*/
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: serif;
 }
-
 html,body{
     min-width: 1100px;
 }
 
+/*Barra de navegación*/
 .navbar{
     background-color: #3278AB;
     position: fixed;
     top: 0;
     width: 100%;
     z-index: 100;
+    border-bottom: 2px #326192 solid;
 }
-
 .navbar ul {
     list-style-type: none;
     margin: 0;
@@ -27,14 +28,12 @@ html,body{
     align-items: center;
     height: 60px;
 }
-
 .navbar li {
     float: left;
     position: relative;
     display: flex;
     align-items: center;
 }
-
 .navbar li a {
     display: flex;
     color: white;
@@ -43,10 +42,11 @@ html,body{
     text-decoration: none;
     align-items: center;
 }
-
 .navbar li a:hover {
     text-decoration: underline;
 }
+
+/*Perfil*/
 main {
     min-width: 600px;
     margin:0 auto;
@@ -58,13 +58,10 @@ main {
     margin: auto;
     padding-bottom: 50px;
     background: 0;
-    background-color: #333;
+    background-color: white;
     color: black;
     text-align: center;
     border-radius: 15px;
-}
-.profile{
-
 }
 .banner{
     border-top-left-radius: 15px;
@@ -74,11 +71,11 @@ main {
 }
 .avatar{
     position: absolute;
-    top: 240px;
-    left: 50%;
+    top: 160px;
+    left: 27%;
     transform: translate(-50%, -50%);
-    width: 180px;
-    height: 180px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     background-size: cover;
     z-index: 2;
@@ -87,41 +84,31 @@ main {
     height: 200px;
 }
 
+/*Pie de página*/
 footer {
-    background-color: #333;
+    background-color: #3278AB;
     color: #fff;
     text-align: center;
     margin: 0;
-    font-size: 15px;
+    font-size: 14px;
 }
-
 footer a {
     color: #fff;
     text-decoration: none;
     margin: 10px 0;
-    padding: 0 16px;
+    padding: 0 16px; 
 }
-
 footer a:hover {
-    color: #F7FF33;
+    color: #ff9900;
 }
-
 .subir{
-    background-color: palegoldenrod;
+    background-color: #326192;
     padding: 15px 0;
-    font-size: 18px;
+    font-size: 15px;
 }
-footer .subir a {
-    color: #333;
-}
-footer .subir a:hover {
-    color: #F7FF33;
-}
-
 footer p{
     padding: 16px 0;
 }
-
 .leftfooter{
     grid-area: left;
     padding-left: 15px;
@@ -139,8 +126,8 @@ footer p{
 .containfooter{
     display: grid;
     text-align: justify;
-    margin-left: 22%;
-    margin-right: 22%;
+    margin-left: 20%;
+    margin-right: 20%;
     margin-top: 20px;
     padding-top: 30px;
     padding-bottom: 30px;
@@ -173,18 +160,29 @@ footer p{
     margin-bottom: 10px;
 }
 .aboutus, .help, .contact{
-    font-size: 20px;
+    font-size: 14px;
     padding-bottom: 10px;
+}
+.tit1{
+    font-size: 17px;
+    padding: 0;
+}
+.tit2{
+    font-size: 15px;
+}
+.fa-solid{
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 12px;
 }
 .socialNetworks{
     display: grid;
     text-align: center;
     padding: 0 5px;
-    margin-left: 30%;
-    margin-right: 30%;
+    margin-left: 20%;
+    margin-right: 20%;
     border-bottom: 1px #fff solid;
 }
-
 .socialNetworks ul{
     list-style: none;
 }
@@ -195,7 +193,84 @@ footer p{
     margin: 5px;
     transition: all 0.5s ease-in-out;
 }
+.socialNetworks ul a i{
+    font-size: 45px;
+}
 .socialNetworks ul a:hover{
     color: #F7FF33;
     transform: scale(1.1);
+}
+footer .fin{
+    margin: 0;
+}
+.textinicio {
+    display: inline-block;
+    position: absolute;
+    top: 300px;
+    left: 20%;
+    font-weight: bold;
+}
+.racha-container {
+    display: inline-block;
+    position: absolute;
+    top: 300px;
+    left: 70%;
+}
+.day {
+    position: absolute;
+    top: 60px; /* Ajusta la distancia vertical desde la llama */
+    left: 13%; /* Ajusta la distancia horizontal desde el borde izquierdo */
+    color: #f57c00;
+    font-family: Segoe UI, Ubuntu, sans-serif;
+}
+
+.racha-circle {
+    display: flex;
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    color: #f57c00;
+    font-size: 24px;
+    text-align: center;
+    line-height: 60px;
+    border: 5px solid;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+.flame {
+    position: absolute;
+    top: -25px;
+    left: 43%; /* Ajusta el valor para mover la llama hacia la izquierda */
+    transform: translateX(-50%);
+    font-size: 28px;
+    color: #ff5722;
+}
+
+@media (max-width: 1100px){
+    .containfooter{
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+}
+@media (max-width: 900px){
+    .containfooter{
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+}
+@media (max-width: 800px){
+    .containfooter{
+        margin-left: 5%;
+        margin-right: 5%;
+    }
+}
+@media (max-width: 700px){
+    .containfooter{
+        margin-left: 2%;
+        margin-right: 2%;
+    }
 }
