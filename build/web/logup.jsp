@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*, conexión.conectadita" %>
+<%@page import="java.sql.*, org.mindrot.jbcrypt.BCrypt, conexión.conectadita" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,6 +20,7 @@
             String password = request.getParameter("password");
             String password2 = request.getParameter("password2");
             if (password.equals(password2)) {
+                String hashed = BCrypt.hashpw(password, BCrypt.gensalt());
                 conectadita conect = new conectadita();
                 Connection con = conect.getConnection();
                 PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Usuario WHERE nombre_Usuario = ?;");
@@ -30,7 +31,7 @@
                     CallableStatement cstmt = con.prepareCall("call sp_agregarBase(?,?,?)");
                     cstmt.setString(1, username);
                     cstmt.setString(2, usermail);
-                    cstmt.setString(3, password);
+                    cstmt.setString(3, hashed);
                     cstmt.execute();
                     con.close();
     %>

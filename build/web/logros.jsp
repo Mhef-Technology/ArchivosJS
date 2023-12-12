@@ -24,7 +24,7 @@
             ArrayList<logros> no = new ArrayList<>();
             
             stmt = con.createStatement();
-            pstmt = con.prepareStatement("select * from Usuario inner join Perfil on Usuario.idUsuario = Perfil.idUsuario inner join RelPerfilLogro on Perfil.idPerfil = RelPerfilLogro.idPerfil inner join Logro on RelPerfilLogro.idLogro = Logro.idLogro");
+            pstmt = con.prepareStatement("select * from vw_searchAwards");
             rstt = stmt.executeQuery("select count(*) as IdMax from Logro");
             rstt.next();
             int maximo = rstt.getInt("IdMax");

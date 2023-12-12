@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@page import="java.sql.*, conexión.conectadita" %>
+<%@page import="java.sql.*, org.mindrot.jbcrypt.BCrypt, conexión.conectadita" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -39,12 +39,11 @@
                 String password = request.getParameter("password");
                 conectadita conect = new conectadita();
                 con = conect.getConnection();
-                pstmt = con.prepareCall("select * from Usuario where nombre_Usuario = ? and contraseña = ?;");
+                pstmt = con.prepareCall("select * from Usuario where nombre_Usuario = ?;");
                 pstmt.setString(1, username);
-                pstmt.setString(2, password);
                 rst = pstmt.executeQuery();
 
-                if (rst.next()) {
+                if (rst.next() && BCrypt.checkpw(password, rst.getString("contraseña"))) {
                     int clave = rst.getInt("idUsuario");
                     PreparedStatement pstmt2 = null;
                     ResultSet rst2 = null;
@@ -55,7 +54,11 @@
                     int tipo = rst2.getInt("idTipoUsuario");
                     sesion.setAttribute("tipo", tipo);
                     sesion.setAttribute("usu", username);
-                    response.sendRedirect("inicio.jsp");
+                    if (tipo == 1 || tipo == 2) {
+                        response.sendRedirect("inicio.jsp");
+                    } else if (tipo == 3) {
+                        response.sendRedirect("inicioA.jsp");
+                        }
                 } else {
         %>
     <body onload="metodo(5)">

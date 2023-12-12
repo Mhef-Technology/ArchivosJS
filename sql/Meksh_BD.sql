@@ -7,7 +7,7 @@ drop table if exists Usuario;
 create table Usuario(idUsuario int primary key not null auto_increment, 
 						nombre_Usuario varchar(30) unique,
 						correo_Usuario varchar(100) unique,
-						contraseña varchar(20));
+						contraseña varchar(60));
 
 drop table if exists TipoUsuario;
 create table TipoUsuario(idTipoUsuario int primary key not null,
@@ -138,10 +138,17 @@ create table Hoja(idHoja int primary key not null,
                         ultimaModificacion_Hoja datetime,
                         foreign key(idUsuario) references Usuario(idUsuario));
 
+drop table if exists MensajeSoporte;
+create table MensajeSoporte(idMensajeSoporte int not null primary key,
+						idUsuario int,
+						contenido varchar(400),
+						fechaEnvio_Mensaje datetime,
+						foreign key (idUsuario) references Usuario(idUsuario));
+
 #Creación de procedimientos
 drop procedure if exists sp_agregarBase;
 delimiter //
-create procedure sp_agregarBase(in nom varchar(30), correo varchar(100), contra varchar(20))
+create procedure sp_agregarBase(in nom varchar(30), correo varchar(100), contra varchar(60))
 begin
 declare xIdUsuario int;
 declare xIdRelUsuarioTipo int;
@@ -168,20 +175,20 @@ declare existe1 int;
 declare existe2 int;
 declare existe3 int;
 declare xMsj varchar(1);
-	set existe = (select count(*) from Usuario inner join Perfil on Usuario.idUsuario = Perfil.idUsuario inner join RelPerfilLogro on Perfil.idPerfil = RelPerfilLogro.idPerfil inner join Logro on RelPerfilLogro.idLogro = Logro.idLogro where nombre_Usuario = usu and nombre_Logro = logro);
+	set existe = (select count(*) from vw_SearchAwards where nombre_Usuario = usu and nombre_Logro = logro);
     if(existe > 0) then
 		set xMsj='n';
 	else
 		set xIdRel = (select ifnull(max(idRelPerfilLogro),0) + 1 from RelPerfilLogro);
 		set xIdLogro = (select idLogro from Logro where nombre_Logro = logro);
-		set xIdPerfil = (select idPerfil from Usuario inner join Perfil on Usuario.idUsuario = Perfil.idUsuario where nombre_Usuario = usu);
+		set xIdPerfil = (select idPerfil from vw_searchProfile where nombre_Usuario = usu);
         set xTot = (select (total_Logros + 1) from Perfil where idPerfil = xIdPerfil);
 		insert into RelPerfilLogro values(xIdRel, xIdPerfil, xIdLogro);
-        update Perfil set total_Logros = xTot where idPerfil = xIdPerfil;
+        update vw_searchProfile set total_Logros = xTot where idPerfil = xIdPerfil;
         
-		set existe1 = (select count(*) from Usuario inner join Perfil on Usuario.idUsuario = Perfil.idUsuario inner join RelPerfilLogro on Perfil.idPerfil = RelPerfilLogro.idPerfil where nombre_Usuario = usu and idLogro = 1);
-		set existe2 = (select count(*) from Usuario inner join Perfil on Usuario.idUsuario = Perfil.idUsuario inner join RelPerfilLogro on Perfil.idPerfil = RelPerfilLogro.idPerfil where nombre_Usuario = usu and idLogro = 2);
-		set existe3 = (select count(*) from Usuario inner join Perfil on Usuario.idUsuario = Perfil.idUsuario inner join RelPerfilLogro on Perfil.idPerfil = RelPerfilLogro.idPerfil where nombre_Usuario = usu and idLogro = 3);
+		set existe1 = (select count(*) from vw_SearchAwards where nombre_Usuario = usu and idLogro = 1);
+		set existe2 = (select count(*) from vw_SearchAwards where nombre_Usuario = usu and idLogro = 2);
+		set existe3 = (select count(*) from vw_SearchAwards where nombre_Usuario = usu and idLogro = 3);
 		if existe1 > 0 and existe2 > 0 and existe3 > 0 then
 			insert into RelPerfilLogro values(xIdRel+1, xIdPerfil, 4);
             set xMsj='x';
@@ -199,8 +206,8 @@ create procedure sp_actualizarTarjeta(in usu varchar(30), conjunto varchar(40), 
 begin
 declare xIdTarjeta int;
 declare xIdConjunto int;
-	set xIdTarjeta = (select idTarjeta from Usuario inner join Conjunto on Usuario.idUsuario = Conjunto.idUsuario inner join Tarjeta on Conjunto.idConjunto = Tarjeta.idConjunto where nombre_Usuario = usu and nombre_Conjunto = conjunto and pregunta_Tarjeta = tarjeta);
-	set xIdConjunto = (select idConjunto from Usuario inner join Conjunto on Usuario.idUsuario = Conjunto.idUsuario where nombre_Usuario = usu and nombre_Conjunto = conjunto);
+	set xIdTarjeta = (select idTarjeta from vw_selectCards where nombre_Usuario = usu and nombre_Conjunto = conjunto and pregunta_Tarjeta = tarjeta);
+	set xIdConjunto = (select idConjunto from vw_searchSets where nombre_Usuario = usu and nombre_Conjunto = conjunto);
 	update Tarjeta set pregunta_Tarjeta = titulo, respuesta_Tarjeta = descripcion where idTarjeta = xIdTarjeta;
 	update Conjunto set ultimaModificacion_Conjunto = current_time() where idConjunto = xIdConjunto;
 end;//
@@ -211,7 +218,7 @@ delimiter //
 create procedure sp_actualizarHoja(in usu varchar(30), hoja varchar(40), titHoja varchar(50), ideas varchar(300), notes varchar(600), resumen varchar(400))
 begin
 declare xIdHoja int;
-	set xIdHoja = (select idHoja from Usuario inner join Hoja on Usuario.idUsuario = Hoja.idUsuario where nombre_Usuario = usu and nombre_Hoja = hoja);
+	set xIdHoja = (select idHoja from vw_selectSheets where nombre_Usuario = usu and nombre_Hoja = hoja);
 	update Hoja set nombre_Hoja = titHoja, ideasClave = ideas, notas = notes, resumen = resumen, ultimaModificacion_Hoja = current_time() where idHoja = xIdHoja;
 end;//
 delimiter ;
@@ -224,7 +231,7 @@ declare xIdConjunto int;
 declare xIdUsuario int;
 declare existe int;
 declare xMsj varchar(1);
-	set existe = (select count(*) from Usuario inner join Conjunto on Usuario.idUsuario = Conjunto.idUsuario where nombre_Usuario = usu and nombre_Conjunto = conjunto);
+	set existe = (select count(*) from vw_SearchSets where nombre_Usuario = usu and nombre_Conjunto = conjunto);
     if(existe > 0) then
 		set xMsj='n';
 	else
@@ -244,7 +251,7 @@ begin
 declare xIdConjunto int;
 declare xIdTarjeta int;
 	set xIdTarjeta = (select ifnull(max(idTarjeta),0) + 1 from Tarjeta);
-    set xIdConjunto = (select idConjunto from Usuario inner join Conjunto on Usuario.idUsuario = Conjunto.idUsuario where nombre_Usuario = usu and nombre_Conjunto = conjunto);
+    set xIdConjunto = (select idConjunto from vw_SearchSets where nombre_Usuario = usu and nombre_Conjunto = conjunto);
     insert into Tarjeta values(xIdTarjeta, xIdConjunto, tarjeta, '');
 end;//
 delimiter ;
@@ -257,7 +264,7 @@ declare xIdHoja int;
 declare xIdUsuario int;
 declare existe int;
 declare xMsj varchar(1);
-	set existe = (select count(*) from Usuario inner join Hoja on Usuario.idUsuario = Hoja.idUsuario where nombre_Usuario = usu and nombre_Hoja = hoja);
+	set existe = (select count(*) from vw_SearchSheets where nombre_Usuario = usu and nombre_Hoja = hoja);
     if(existe > 0) then
 		set xMsj='n';
 	else
@@ -269,6 +276,46 @@ declare xMsj varchar(1);
 select xMsj as mensaje;
 end;//
 delimiter ;
+
+drop procedure if exists sp_agregarMensajeSoporte;
+delimiter //
+create procedure sp_agregarMensajeSoporte(in usu varchar(30), texto varchar(400))
+begin
+declare xIdMensajeS int;
+declare xIdUsuario int;
+declare existe int;
+	set xIdMensajeS = (select ifnull(max(idMensajeSoporte),0) + 1 from MensajeSoporte);
+	set xIdUsuario = (select idUsuario from Usuario where nombre_Usuario = usu);
+	insert into MensajeSoporte values(xIdMensajeS, xIdUsuario, texto, current_time());
+end;//
+delimiter ;
+
+#Creación de vistas
+drop view if exists vw_searchProfile;
+create view vw_searchProfile as select nombre_Usuario, idPerfil, total_Logros, estatus_Actual, estatus_Record from Perfil inner join Usuario on Perfil.idUsuario = Usuario.idUsuario;
+
+drop view if exists vw_searchAwards;
+create view vw_searchAwards as select nombre_Usuario, total_Logros, Logro.idLogro, nombre_Logro, descripcionCorta_Logro, descripcionLarga_Logro, tipo_Logro from Logro inner join RelPerfilLogro on Logro.idLogro = RelPerfilLogro.idLogro inner join Perfil on RelPerfilLogro.idPerfil = Perfil.idPerfil inner join Usuario on Perfil.idUsuario = Usuario.idUsuario;
+
+drop view if exists vw_searchSets;
+create view vw_searchSets as select nombre_Usuario, idConjunto, Conjunto.idUsuario, nombre_Conjunto, date_format(fechaCreacion_Conjunto, "%d-%m-%Y") fechaCreacionConjunto, date_format(ultimaModificacion_Conjunto, "%d:%m:%Y") fechaUltimaModifConjunto, time_format(ultimaModificacion_Conjunto, "%H:%i:%s") horaUltimaModifConjunto from Conjunto inner join Usuario on Conjunto.idUsuario = Usuario.idUsuario;
+
+drop view if exists vw_searchCards;
+create view vw_searchCards as select nombre_Usuario, nombre_Conjunto, pregunta_Tarjeta from Tarjeta inner join Conjunto on Tarjeta.idConjunto = Conjunto.idConjunto inner join Usuario on Conjunto.idUsuario = Usuario.idUsuario;
+
+drop view if exists vw_selectCards;
+create view vw_selectCards as select nombre_Usuario, nombre_Conjunto, idTarjeta, pregunta_Tarjeta, respuesta_Tarjeta from Tarjeta inner join Conjunto on Tarjeta.idConjunto = Conjunto.idConjunto inner join Usuario on Conjunto.idUsuario = Usuario.idUsuario;
+
+drop view if exists vw_searchSheets;
+create view vw_searchSheets as select nombre_Usuario, idHoja, nombre_Hoja, date_format(fechaCreacion_Hoja, "%d-%m-%Y") fechaCreacionHoja, date_format(ultimaModificacion_Hoja, "%d:%m:%Y") fechaUltimaModifHoja, time_format(ultimaModificacion_Hoja, "%H:%i:%s") horaUltimaModifHoja from Hoja inner join Usuario on Hoja.idUsuario = Usuario.idUsuario;
+
+drop view if exists vw_selectSheets;
+create view vw_selectSheets as select nombre_Usuario, idHoja, nombre_Hoja, ideasClave, notas, resumen from Hoja inner join Usuario on Hoja.idUsuario = Usuario.idUsuario;
+
+drop view if exists vw_searchLastsTasks;
+create view vw_searchLastsTasks as select nombre_Usuario, idTarea, nombre_Tarea, fecha_Tarea, tiempo_Tarea, descripcion_Tarea from Tarea inner join Usuario on Tarea.idUsuario = Usuario.idUsuario;
+
+#Creación de transacciones
 
 #Mostrar tablas
 select * from Usuario;
@@ -290,6 +337,13 @@ select * from Conjunto;
 select * from Tarjeta;
 select * from Tarea;
 select * from Hoja;
+select * from MensajeSoporte;
+select * from vw_searchAwards;
+select * from vw_searchSets;
+select * from vw_searchCards;
+select * from vw_selectCards;
+select * from vw_searchSheets;
+select * from vw_selectSheets;
 
 #Datos predeterminados
 insert into TipoUsuario values(1, 'Base'), (2, 'Premium'), (3, 'Administrador');
@@ -300,32 +354,7 @@ insert into Logro values(3, 'Flash-Inicia', 'Besos en el cerebro', 'Realiza tu p
 insert into Logro values(4, 'Rápidamente Sabio', '¡Sigue aprendiendo, no pares!', 'Haz uso de cada uno de los métodos de estudio que te proporciona Meksh', 'Legendario');
 
 #Pruebas
-call sp_agregarBase('Ferna', 'fer@gmail.com', '1234.Fer');
-call sp_agregarBase('Nateyla', 'nataponi276@gmail.com', 'Luchito_4');
-
-delete from Conjunto;
-insert into Conjunto values(1, 1, 'Conjunto1', current_date(), current_date());
-insert into Conjunto values(2, 1, 'Conjunto2', current_time(), current_time());
-insert into Conjunto values(3, 1, 'Conjunto3', current_time(), current_time());
-insert into Conjunto values(4, 1, 'Conjunto4', current_time(), current_time());
-insert into Conjunto values(5, 1, 'Conjunto5', current_time(), current_time());
-
-delete from Tarjeta;
-insert into Tarjeta values(1, 1, "Pregunta 1", "Respuesta1");
-insert into Tarjeta values(2, 1, "Pregunta 2", "Respuesta2");
-
-delete from Hoja;
-insert into Hoja values(1, 1, 'titulo1', 'idea1', 'Notas', 'Resumen', current_date(), current_date());
-
-delete from RelPerfilLogro;
-call sp_agregarLogros('Ferna', 'Crono Prestigio');
-call sp_agregarLogros('Ferna', 'Flash-Inicia');
-call sp_agregarLogros('Ferna', 'Explorando la Creatividad');
-
-delete from Amigo;
-insert into Amigo values(1, 1, 2, current_time());
-
-call sp_actualizarTarjeta('Ferna', 'Conjunto1', 'hola', 'aquí', 'Jajajaja');
-call sp_agregarConjunto('Ferna', 'Conjunto7');
-
-call sp_actualizarHoja('Ferna', 'novotit', 'novotit2', 'novoidea', 'novonote', 'novoresume');
+call sp_agregarBase('Ferna', 'fer@gmail.com', '$2a$10$s.PAbMxyrWWqkK.6/ACQfermP9m3NrvpQ.jY/Otx4NlsdkjyAPgAW');
+update RelUsuarioTipo set idTipoUsuario = 3 where idUsuario = 1;
+call sp_agregarBase('Nateyla', 'nataponi276@gmail.com', '$2a$10$uhrqgJ8WLJGGPvWfz4M.jOJwKkcWuk42ct6h2At71i3GPPhnyi6oW');
+update RelUsuarioTipo set idTipoUsuario = 3 where idUsuario = 2;

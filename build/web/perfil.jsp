@@ -84,7 +84,7 @@
                     <li><a href="inicio.jsp" title="Ir al Inicio"><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></a></li>
                     <li><a href="logros.jsp">Logros</a></li>
                     <li><a href="#amigos">Amigos</a></li>
-                    <li><a href="calendario.jsp">Estatus</a></li>
+                    <li><a href="estatus.jsp">Estatus</a></li>
                     <li><a href="inicio.jsp?logout=1">Cerrar sesión</a></li>
                 </ul>
             </div>

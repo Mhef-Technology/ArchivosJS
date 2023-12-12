@@ -64,6 +64,12 @@ function metodo(cual) {
                 icon: "error"
             });
             break;
+        case 11:
+            Swal.fire({
+                text: "Selecciona primero un usuario",
+                icon: "error"
+            });
+            break;
         default:
             break;
     }

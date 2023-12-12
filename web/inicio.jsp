@@ -108,6 +108,10 @@
                     </div>
                     <div class="centerfooter">
                         <div class="help">Ayuda</div>
+                        <ul>
+                            <li><p class="tit2">¿Necesitas ayuda?</p></li>
+                            <li><a href="soporte.jsp"><i class="fa-solid fa-headset" style="color: #ffffff; display: flex; justify-content: left; margin-left: 20px; font-size: 20px; "></i></a></li>
+                        </ul>
                     </div>
                     <div class="rightfooter">
                         <div class="contact">Contacto</div>
