@@ -242,7 +242,7 @@
             actualizarHora();
 
             const usuario = "<%=usuario%>";
-            const socket = new WebSocket("wss://mhef.gerdoc.com:9080/Meksh_/websocketMeksh/" + usuario + "/");
+            const socket = new WebSocket("ws://mhef.gerdoc.com:9080/Meksh_/websocketMeksh/" + usuario + "/");
 
             socket.onmessage = function (event) {
                 const encriptadito = event.data;
