@@ -242,7 +242,7 @@
             actualizarHora();
 
             const usuario = "<%=usuario%>";
-            const socket = new WebSocket("wss://mhef.gerdoc.com:8080/Meksh_/websocketMeksh/" + usuario + "/");
+            const socket = new WebSocket("wss://mhef.gerdoc.com:9080/Meksh_/websocketMeksh/" + usuario + "/");
 
             socket.onmessage = function (event) {
                 const encriptadito = event.data;
@@ -252,20 +252,6 @@
                     console.log("El mensaje ha sido recibido: ", encriptadito);
                 }
             };
-
-            function envio() {
-                const texto = document.getElementById("mensaje");
-                const msg = texto.value.trim();
-
-                if (msg !== "") {
-                    añadirMensaje(msg, 2);
-                    const encriptadito = encriptar(msg);
-                    socket.send(": " + encriptadito);
-                    console.log("El mensaje ha sido enviado: ", encriptadito);
-                    texto.value = "";
-                    texto.focus();
-                }
-            }
 
             function añadirMensaje(msg, tipo) {
                 const container = document.getElementById("containsChat");
@@ -281,6 +267,20 @@
                 }
 
                 container.appendChild(messagei);
+            }
+            
+            function envio() {
+                const texto = document.getElementById("mensaje");
+                const msg = texto.value.trim();
+
+                if (msg !== "") {
+                    añadirMensaje(msg, 2);
+                    const encriptadito = encriptar(msg);
+                    socket.send(": " + encriptadito);
+                    console.log("El mensaje ha sido enviado: ", encriptadito);
+                    texto.value = "";
+                    texto.focus();
+                }
             }
 
             function desencriptar(encript) {

@@ -188,7 +188,7 @@
             setInterval(actualizarHora, 1000);
             actualizarHora();
 
-            const socket = new WebSocket("wss://mhef.gerdoc.com:8080/Meksh_/websocketMeksh/Soporte/");
+            const socket = new WebSocket("ws://mhef.gerdoc.com:9080/Meksh_/websocketMeksh/Soporte/");
             socket.onmessage = function (event) {
                 const encriptadito = event.data;
                 añadirMensaje(encriptadito, 1);
