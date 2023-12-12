@@ -181,14 +181,14 @@ declare xMsj varchar(1);
 	else
 		set xIdRel = (select ifnull(max(idRelPerfilLogro),0) + 1 from RelPerfilLogro);
 		set xIdLogro = (select idLogro from Logro where nombre_Logro = logro);
-		set xIdPerfil = (select idPerfil from vw_searchProfile where nombre_Usuario = usu);
+		set xIdPerfil = (select idPerfil from Usuario inner join Perfil on Usuario.idUsuario = Perfil.idUsuario where nombre_Usuario = usu);
         set xTot = (select (total_Logros + 1) from Perfil where idPerfil = xIdPerfil);
 		insert into RelPerfilLogro values(xIdRel, xIdPerfil, xIdLogro);
-        update vw_searchProfile set total_Logros = xTot where idPerfil = xIdPerfil;
+        update Perfil set total_Logros = xTot where idPerfil = xIdPerfil;
         
-		set existe1 = (select count(*) from vw_SearchAwards where nombre_Usuario = usu and idLogro = 1);
-		set existe2 = (select count(*) from vw_SearchAwards where nombre_Usuario = usu and idLogro = 2);
-		set existe3 = (select count(*) from vw_SearchAwards where nombre_Usuario = usu and idLogro = 3);
+		set existe1 = (select count(*) from Usuario inner join Perfil on Usuario.idUsuario = Perfil.idUsuario inner join RelPerfilLogro on Perfil.idPerfil = RelPerfilLogro.idPerfil where nombre_Usuario = usu and idLogro = 1);
+		set existe2 = (select count(*) from Usuario inner join Perfil on Usuario.idUsuario = Perfil.idUsuario inner join RelPerfilLogro on Perfil.idPerfil = RelPerfilLogro.idPerfil where nombre_Usuario = usu and idLogro = 2);
+		set existe3 = (select count(*) from Usuario inner join Perfil on Usuario.idUsuario = Perfil.idUsuario inner join RelPerfilLogro on Perfil.idPerfil = RelPerfilLogro.idPerfil where nombre_Usuario = usu and idLogro = 3);
 		if existe1 > 0 and existe2 > 0 and existe3 > 0 then
 			insert into RelPerfilLogro values(xIdRel+1, xIdPerfil, 4);
             set xMsj='x';
@@ -206,8 +206,8 @@ create procedure sp_actualizarTarjeta(in usu varchar(30), conjunto varchar(40), 
 begin
 declare xIdTarjeta int;
 declare xIdConjunto int;
-	set xIdTarjeta = (select idTarjeta from vw_selectCards where nombre_Usuario = usu and nombre_Conjunto = conjunto and pregunta_Tarjeta = tarjeta);
-	set xIdConjunto = (select idConjunto from vw_searchSets where nombre_Usuario = usu and nombre_Conjunto = conjunto);
+	set xIdTarjeta = (select idTarjeta from Usuario inner join Conjunto on Usuario.idUsuario = Conjunto.idUsuario inner join Tarjeta on Conjunto.idConjunto = Tarjeta.idConjunto where nombre_Usuario = usu and nombre_Conjunto = conjunto and pregunta_Tarjeta = tarjeta);
+	set xIdConjunto = (select idConjunto from Usuario inner join Conjunto on Usuario.idUsuario = Conjunto.idUsuario where nombre_Usuario = usu and nombre_Conjunto = conjunto);
 	update Tarjeta set pregunta_Tarjeta = titulo, respuesta_Tarjeta = descripcion where idTarjeta = xIdTarjeta;
 	update Conjunto set ultimaModificacion_Conjunto = current_time() where idConjunto = xIdConjunto;
 end;//
@@ -218,7 +218,7 @@ delimiter //
 create procedure sp_actualizarHoja(in usu varchar(30), hoja varchar(40), titHoja varchar(50), ideas varchar(300), notes varchar(600), resumen varchar(400))
 begin
 declare xIdHoja int;
-	set xIdHoja = (select idHoja from vw_selectSheets where nombre_Usuario = usu and nombre_Hoja = hoja);
+	set xIdHoja = (select idHoja from Usuario inner join Hoja on Usuario.idUsuario = Hoja.idUsuario where nombre_Usuario = usu and nombre_Hoja = hoja);
 	update Hoja set nombre_Hoja = titHoja, ideasClave = ideas, notas = notes, resumen = resumen, ultimaModificacion_Hoja = current_time() where idHoja = xIdHoja;
 end;//
 delimiter ;
@@ -231,7 +231,7 @@ declare xIdConjunto int;
 declare xIdUsuario int;
 declare existe int;
 declare xMsj varchar(1);
-	set existe = (select count(*) from vw_SearchSets where nombre_Usuario = usu and nombre_Conjunto = conjunto);
+	set existe = (select count(*) from Usuario inner join Conjunto on Usuario.idUsuario = Conjunto.idUsuario where nombre_Usuario = usu and nombre_Conjunto = conjunto);
     if(existe > 0) then
 		set xMsj='n';
 	else
@@ -251,7 +251,7 @@ begin
 declare xIdConjunto int;
 declare xIdTarjeta int;
 	set xIdTarjeta = (select ifnull(max(idTarjeta),0) + 1 from Tarjeta);
-    set xIdConjunto = (select idConjunto from vw_SearchSets where nombre_Usuario = usu and nombre_Conjunto = conjunto);
+    set xIdConjunto = (select idConjunto from Usuario inner join Conjunto on Usuario.idUsuario = Conjunto.idUsuario where nombre_Usuario = usu and nombre_Conjunto = conjunto);
     insert into Tarjeta values(xIdTarjeta, xIdConjunto, tarjeta, '');
 end;//
 delimiter ;
@@ -264,7 +264,7 @@ declare xIdHoja int;
 declare xIdUsuario int;
 declare existe int;
 declare xMsj varchar(1);
-	set existe = (select count(*) from vw_SearchSheets where nombre_Usuario = usu and nombre_Hoja = hoja);
+	set existe = (select count(*) from Usuario inner join Hoja on Usuario.idUsuario = Hoja.idUsuario where nombre_Usuario = usu and nombre_Hoja = hoja);
     if(existe > 0) then
 		set xMsj='n';
 	else
