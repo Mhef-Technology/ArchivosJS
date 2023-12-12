@@ -188,7 +188,7 @@
             setInterval(actualizarHora, 1000);
             actualizarHora();
 
-            const socket = new WebSocket("ws://mhef.gerdoc.com/Meksh_/websocketMeksh/Soporte/");
+            const socket = new WebSocket("wss://mhef.gerdoc.com:8080/Meksh_/websocketMeksh/Soporte/");
             socket.onmessage = function (event) {
                 const encriptadito = event.data;
                 añadirMensaje(encriptadito, 1);
@@ -206,8 +206,8 @@
                     } else {
                         añadirMensaje(msg, 2);
                         const encriptadito = encriptar(msg);
-                        socket.send(destinatario + ": " + encriptadito);
-                        console.log("El mensaje ha sido enviado: ", encriptadito);
+                        socket.send(destinatario+": "+encriptadito);
+                        console.log("El mensaje ha sido enviado: ",destinatario,": ",encriptadito);
                         texto.value = "";
                         texto.focus();
                     }
