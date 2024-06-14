@@ -13,6 +13,7 @@
     <%@ page import="javax.servlet.http.*" %>
     <%@ page import="java.io.*" %>
     <%
+        request.setCharacterEncoding("UTF-8");
         HttpSession sesion = sesion = request.getSession();;
         String usuario = null;
         String tema = null;
@@ -74,7 +75,7 @@
                             {question: "¿Quién pintó 'La persistencia de la memoria'?", options: ["Salvador Dalí", "Pablo Picasso", "Joan Miró", "Henri Matisse"], answer: "Salvador Dalí"},
                             {question: "¿Quién descubrió América?", "options": ["Cristóbal Colón", "Fernando de Magallanes", "Américo Vespucio", "Vasco da Gama"], "answer": "Cristóbal Colón"},
                             {question: "¿Cuál es el planeta más grande del sistema solar?", "options": ["Marte", "Júpiter", "Saturno", "Neptuno"], "answer": "Júpiter"},
-                            {"question": "¿Quién es el autor de 'Cien años de soledad'?", "options": ["Julio Cortázar", "Gabriel García Márquez", "Isabel Allende", "Mario Vargas Llosa"]}, {
+                            {"question": "¿Quién es el autor de 'Cien años de soledad'?", "options": ["Julio Cortázar", "Gabriel García Márquez", "Isabel Allende", "Mario Vargas Llosa"], "answer": "Gabriel García Márquez"}, {
                                 "question": "¿Cuál es el país con mayor extensión territorial en África?",
                                 "options": ["Sudáfrica", "Nigeria", "Argelia", "Egipto"],
                                 "answer": "Argelia"

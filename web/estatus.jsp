@@ -13,7 +13,7 @@
     <%@ page import="javax.servlet.http.*" %>
     <%@ page import="java.io.*" %>
     <%
-
+        request.setCharacterEncoding("UTF-8");
         java.util.Date currentDate = new java.util.Date();
         HttpSession sesion = request.getSession();;
         String usuario = null;

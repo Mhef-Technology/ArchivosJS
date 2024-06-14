@@ -13,16 +13,11 @@
         <title>Meksh - Chatbot</title>
     </head>
     <%
-
-        // Obtiene la fecha actual
+        request.setCharacterEncoding("UTF-8");
         java.util.Date currentDate = new java.util.Date();
-        // Declarar las variables fuera del bloque try-catch
         HttpSession sesion = null;
         String usuario = null;
         String tema = null;
-        Cookie loginCountCookie = null;
-        Cookie lastLoginCookie = null;
-        String firstLoginDate = null; // Declarar aquí para que esté en el mismo ámbito
 
         int loginCount = 1; // Declarar e inicializar fuera del bloque try-catch
 
@@ -31,44 +26,6 @@
             usuario = (sesion.getAttribute("usu") != null) ? sesion.getAttribute("usu").toString() : "";
             tema = (sesion.getAttribute("tema") != null) ? sesion.getAttribute("tema").toString() : "";
 
-            // Define el nombre de la cookie para la fecha del último inicio de sesión
-            String lastLoginCookieName = "lastLogin";
-
-            // Define el nombre de la cookie para el contador de días consecutivos de inicio de sesión
-            String loginCountCookieName = "loginCount";
-
-            // Actualiza la cookie de la fecha del último inicio de sesión (si no existe)
-            if (request.getParameter("logout") == null) {
-                lastLoginCookie = new Cookie(lastLoginCookieName, currentDate.toString());
-                lastLoginCookie.setMaxAge(24 * 60 * 60); // Expira en 24 horas
-                response.addCookie(lastLoginCookie); // Agrega la cookie a la respuesta
-            }
-
-            // Actualiza el contador de días consecutivos de inicio de sesión (si no existe)
-            Cookie[] existingCookies = request.getCookies();
-            if (existingCookies != null) {
-                for (Cookie existingCookie : existingCookies) {
-                    if (loginCountCookieName.equals(existingCookie.getName())) {
-                        loginCount = Integer.parseInt(existingCookie.getValue()) + 1;
-                        break;
-                    }
-                }
-            }
-            loginCountCookie = new Cookie(loginCountCookieName, String.valueOf(loginCount));
-            loginCountCookie.setMaxAge(24 * 60 * 60); // Expira en 24 horas
-            response.addCookie(loginCountCookie); // Agrega la cookie a la respuesta
-
-            // Obtiene la fecha del primer inicio de sesión
-            Cookie[] cookies = request.getCookies();
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if (lastLoginCookieName.equals(cookie.getName())) {
-                        firstLoginDate = cookie.getValue();
-                        break;
-                    }
-                }
-            }
-            // Resto del código...
         } catch (Exception e) {
             e.printStackTrace();
             out.println("Excepción: " + e.getMessage());
@@ -654,15 +611,6 @@
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-            try {
-                if (lastLoginCookie != null) {
-                    response.addCookie(lastLoginCookie);
-                }
-                response.addCookie(loginCountCookie);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        } 
     %>
 </html>

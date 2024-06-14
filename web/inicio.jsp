@@ -11,6 +11,7 @@
         <title>Meksh - Home</title>
     </head>
     <%
+        request.setCharacterEncoding("UTF-8");
         HttpSession sesion = request.getSession();
         if (sesion.getAttribute("usu") != null) {
             String usuario = sesion.getAttribute("usu").toString();

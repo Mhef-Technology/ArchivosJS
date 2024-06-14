@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*, conexion.conectadita" %>
 <!DOCTYPE html>
 <html>
@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="ruta/a/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <%
+            request.setCharacterEncoding("UTF-8");
             HttpSession sesion = request.getSession();
             if (sesion.getAttribute("usu") != null) {
                 String hoja = request.getParameter("hoja");
@@ -26,6 +27,9 @@
                 con = conect.getConnection();
 
                 if (request.getParameter("save") != null) {
+                    %>
+                    <script>console.log("<%=ideas%>")</script>
+                    <%
                     CallableStatement cstmt = con.prepareCall("call sp_actualizarHoja(?,?,?,?,?,?)");
                     cstmt.setString(1, usuario);
                     cstmt.setString(2, hoja);
@@ -67,7 +71,7 @@
     </header>
     <main>
         <div class="thing">
-            <form action="sheet.jsp?hoja=<%=hoja%>" method="post">
+            <form action="sheet.jsp?hoja=<%=hoja%>" method="post" accept-charset="UTF-8">
                 <div class="up">
                     <button class="save" name="save">Guardar cambios</button>
                     <button class="question" name="question" onclick="metodo(3)" type="button"><img src="img/pregunta.jpg" class="quest" alt="?"/></button>

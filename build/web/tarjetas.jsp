@@ -13,6 +13,7 @@
     </head>
     <body>
         <%
+            request.setCharacterEncoding("UTF-8");
             HttpSession sesion = request.getSession();
             if (sesion.getAttribute("usu") != null) {
                 String conjunto = request.getParameter("conjunto");

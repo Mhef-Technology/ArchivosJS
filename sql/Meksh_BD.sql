@@ -176,7 +176,7 @@ declare existe1 int;
 declare existe2 int;
 declare existe3 int;
 declare xMsj varchar(1);
-	set existe = (select count(*) from vw_SearchAwards where nombre_Usuario = usu and nombre_Logro = logro);
+	set existe = (select count(*) from Logro inner join RelPerfilLogro on Logro.idLogro = RelPerfilLogro.idLogro inner join Perfil on RelPerfilLogro.idPerfil = Perfil.idPerfil inner join Usuario on Perfil.idUsuario = Usuario.idUsuario where nombre_Usuario = usu and nombre_Logro = logro);
     if(existe > 0) then
 		set xMsj='n';
 	else

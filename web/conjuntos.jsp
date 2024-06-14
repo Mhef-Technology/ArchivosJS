@@ -13,6 +13,7 @@
         <title>Meksh - Flashcards</title>
     </head>
     <%
+        request.setCharacterEncoding("UTF-8");
         HttpSession sesion = request.getSession();
         if (sesion.getAttribute("usu") != null) {
             String usuario = sesion.getAttribute("usu").toString();
@@ -238,7 +239,7 @@
                 }
             }
             async function enviarPreguntaRespuesta(tema, pregunta, respuesta, usuario, vez) {
-                const response = await fetch('ws://mhef.gerdoc.com:9080/Meksh_/pregunta-respuesta', {
+                const response = await fetch('http://mhef.gerdoc.com:9080/Meksh_/pregunta-respuesta', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

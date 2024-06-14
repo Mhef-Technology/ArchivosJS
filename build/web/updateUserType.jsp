@@ -7,6 +7,7 @@
     </head>
     <body>
         <%
+            request.setCharacterEncoding("UTF-8");
             HttpSession sesion = request.getSession();
             if (sesion.getAttribute("usu") != null) {
                 String usuario = (String) sesion.getAttribute("usu");

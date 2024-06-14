@@ -13,6 +13,7 @@
     <%@ page import="java.sql.*, conexion.conectadita" %>
     <%@ page import="java.io.*" %>
     <%
+        request.setCharacterEncoding("UTF-8");
         java.util.Date currentDate = new java.util.Date();
         HttpSession sesion = request.getSession();
         if (sesion.getAttribute("usu") != null) {

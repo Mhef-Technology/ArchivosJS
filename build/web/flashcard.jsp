@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="ruta/a/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <%
+            request.setCharacterEncoding("UTF-8");
             HttpSession sesion = request.getSession();
             if (sesion.getAttribute("usu") != null) {
                 String conjunto = request.getParameter("conjunto");
@@ -66,7 +67,7 @@
     </header>
     <main>
         <div class="thing">
-            <form action="flashcard.jsp?tarjeta=<%=tarjeta%>&conjunto=<%=conjunto%>" method="post">
+            <form action="flashcard.jsp?tarjeta=<%=tarjeta%>&conjunto=<%=conjunto%>" method="post" accept-charset="UTF-8">
                 <div class="up">
                     <button class="save" name="save">Guardar cambios</button>
                     <button class="question" name="question" onclick="metodo(2)" type="button"><img src="img/pregunta.jpg" class="quest" alt="?"/></button>
