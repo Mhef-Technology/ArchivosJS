@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" href="img/meksh-removebg-preview.png" type="image/x-icon">
         <link rel="stylesheet" href="css/principal.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
@@ -14,10 +15,10 @@
     <body>
         <div class="navbar">
             <ul>
-                <li><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 10px;"/></li>
-                <li><a href="login.jsp">Ir a Meksh</a></li>
-                <li><a href="http://mhef.gerdoc.com/">¿Quiénes somos?</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+                <li><img src="img/logoMeksh.jpg" height="63" alt="logoMeksh" style="margin-left: 20px; margin-right: 10px;"/></li>
+                <li><a href="login.jsp" style="font-size:22px;">Iniciar sesión</a></li>
+                <li><a href="http://mhef.gerdoc.com/" style="font-size:22px;">¿Quiénes somos?</a></li>
+                <li><a href="#contacto" style="font-size:22px;">Contacto</a></li>
             </ul>
         </div>
         <!-- Start Banner Hero -->
@@ -26,6 +27,7 @@
                 <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
                 <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
                 <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+                <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="3"></li>
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -88,7 +90,83 @@
                         </div>
                     </div>
                 </div>
+            
+            <div class="carousel-item">
+                    <div class="containerr">
+                        <div class="row p-5">
+                            <div class="col-lg-6 mb-0 d-flex align-items-center">
+                                <div class="text-align-left">
+                                    <div class="container">
+                                    <div class="price">
+                                          <div class="price-card">
+                                            <div class="price-wrapper">
+                                              <div class="info">
+                                                <div><img src="/img/Group 39506.png" alt="" /></div>
+                                                <div>
+                                                  
+                                                    <b><span class="bold">Gratis</span></b> 
+                                                </div>
+                                              </div>
+
+                                              <div class="text">
+                                                <p>Embarcate en el aprendizaje</p>
+                                              </div>
+
+                                              <div class="details">
+                                                <p><span class="bold">$0</span> /mes</p>
+                                                <p>Incluye</p>
+                                                <ul>        
+                                                  <li>1 Avatar grátis</li>
+                                                  <br> 
+                                                  <li>1 Banner grátis</li>
+                                                  <br> 
+                                                  <li>Logros</li>
+                                                </ul>
+                                              </div>
+                                                 <br>  
+                                              <button id="startButton">Empezar ya</button>
+                                            </div>
+                                          </div>
+
+                                          <div class="price-card">
+                                            <div class="price-wrapper">
+                                              <div class="info" >
+                                                <div><img src="/img/Group 39506.png" alt="" /></div>
+                                                <div>
+                                                 
+                                                  <b><span class="bold">Premium</span></b>                                               
+                                                </div>
+                                              </div>
+
+                                              <div class="text">
+                                                <p>Acceso exclusivo a nuevos lanzamientos</p>
+                                              </div>
+
+                                              <div class="details">
+                                                <p><span class="bold">$99</span> /mes</p>
+                                                <p>Incluye</p>
+                                                <ul>
+                                                  <li>!Ahora puedes agregar a tus amigos!</li>
+                                                  <li>10 Avatares grátis</li>
+                                                  <li>10 Banners grátis</li>
+                                                  <li>Descarga tus archivos</li>
+                                                  <li>Conjuntos ilimitados</li>
+
+                                                </ul>
+                                              </div>
+                                              <button id="startButton2">Desbloquea todo ahora</button>
+                                            </div>
+                                          </div>
+                                          </div>
+
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>            
             </div>
+        
             <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
                 <i class="fas fa-chevron-left"></i>
             </a>
@@ -98,6 +176,18 @@
         </div>
         <!-- End Banner Hero -->
         <section class="box">
+            <div>
+                <h1 class="proyecto">¿Qué es Meksh?</h1>
+                <p>
+                    Meksh es una plataforma web y móvil la cual proporciona a los usuarios herramientas interactivas
+                    y personalizadas para optimizar su proceso de aprendizaje, específicamente que el usuario pueda
+                    organizar sus tiempos de estudio, mejorar la obtención y comprensión de la información, así como
+                    facilitar la memorización sistemática, atraves de distintos metodos de estudio.
+                </p>
+            </div>
+            <div>
+                <img src="img/LogoP.png" width="300px" height="300px" alt="Meksh"/>
+            </div>
         </section>
         <footer>
             <div class="subir">
@@ -118,7 +208,11 @@
                         </ul>
                     </div>
                     <div class="centerfooter">
-                        <div class="help"><p class="tit1">Ayuda</p></div>
+                        <div class="help">Ayuda</div>
+                        <ul>
+                            <li><p class="tit2">¿Necesitas ayuda?</p></li>
+                            <li><a href="soporte.jsp"><i class="fa-solid fa-headset" style="color: #ffffff; display: flex; justify-content: left; margin-left: 20px; font-size: 20px; "></i></a></li>
+                        </ul>
                     </div>
                     <div class="rightfooter">
                         <div class="contact" id="contacto"><p class="tit1">Contacto</p></div>
@@ -142,6 +236,14 @@
             </div>
             <p class="fin">&copy; 2023 Mhef Technology. Todos los derechos reservados</p>
         </footer>
+         <script>
+            document.getElementById('startButton').addEventListener('click', function() {
+              window.location.href = 'logup.jsp';
+          });
+          document.getElementById('startButton2').addEventListener('click', function() {
+          window.location.href = 'logup.jsp?source=startButton2';
+      });
+      </script>
         <script src="js/bootstrap.bundle.min.js"></script>
-    </body>
+    </body>
 </html>

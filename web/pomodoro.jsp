@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*, conexión.conectadita" %>
+<%@page import="java.sql.*, conexion.conectadita" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,39 +11,43 @@
     </head>
     <%
         HttpSession sesion = request.getSession();
-        String usuario = sesion.getAttribute("usu").toString();
-        Connection con = null;
-        conectadita conect = new conectadita();
-        con = conect.getConnection();
-        if (request.getParameter("logro") != null) {
-            CallableStatement cstmt2 = con.prepareCall("call sp_agregarLogros(?,?)");
-            cstmt2.setString(1, usuario);
-            cstmt2.setString(2, "Crono Prestigio");
-            cstmt2.execute();
-            ResultSet rst3 = cstmt2.getResultSet();
-            rst3.next();
-            if (rst3.getString("mensaje").equals("s")) {
+        if (sesion.getAttribute("usu") != null) {
+            String usuario = sesion.getAttribute("usu").toString();
+            String tema = sesion.getAttribute("tema").toString();
+            Connection con = null;
+            conectadita conect = new conectadita();
+            con = conect.getConnection();
+            if (request.getParameter("logro") != null) {
+                CallableStatement cstmt2 = con.prepareCall("call sp_agregarLogros(?,?)");
+                cstmt2.setString(1, usuario);
+                cstmt2.setString(2, "Crono Prestigio");
+                cstmt2.execute();
+                ResultSet rst3 = cstmt2.getResultSet();
+                rst3.next();
+                if (rst3.getString("mensaje").equals("s")) {
     %>
-    <body onload="logro(2, 1)">
+    <body onload="logro(2, 1)" class="<%=tema%>">
         <%
         } else if (rst3.getString("mensaje").equals("x")) {
         %>
-    <body onload="logro(2, 2)">
+    <body onload="logro(2, 2)" class="<%=tema%>">
         <%
-                }
-                cstmt2.close();
             }
+            cstmt2.close();
+        } else {
 
 
         %>
-    <body>
+    <body class="<%=tema%>">
+        <%
+            }
+        %>
         <header>
             <div class="navbar">
                 <ul>
                     <li><a href="inicio.jsp" title="Ir al Inicio"><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></a></li>
                     <li><a href="perfil.jsp"><img src="img/predeterminado.jpeg" width="50" alt="logoMeksh" class="perfil" style="margin-left: 10px; margin-right: 10px;"/><p id="usuario"><%=usuario%></p></a></li>
                     <li><a href="logros.jsp">Logros</a></li>
-                    <li><a href="#amigos">Amigos</a></li>
                     <li><a href="estatus.jsp">Estatus</a></li>
                     <li><a href="inicio.jsp?logout=1">Cerrar sesión</a></li>
                 </ul>
@@ -51,22 +55,23 @@
         </header>
         <main>
             <div class="clock">
-                <video class="hielo" id="hielo" controls>
-                    <source src="video/Hielo de 1 minuto.mp4" type="video/mp4">
-                    <source src="video/Hielito5.mp4" type="video/mp4">
+                <video class="hielo" id="hielo">
+                    <%
+                        if (tema.equals("dark")) {
+                    %>
+                    <source src="video/darkone.mp4" type="video/mp4" >
+                    <%
+                        } else {
+                    %>
+                    <source src="video/VideoHielo.mp4" type="video/mp4" >
+                    <%
+                        }
+                    %>
                 </video>
                 <h1 id="tiempo">01:00</h1>
                 <button class="boton-comenzar" id="boton-comenzar" onclick="comenzar(), iniciarCuentaRegresiva()">
                     Comenzar cronómetro
                 </button>
-                      </div>
-            <div class="tareas">
-                <div class="tarea 1">
-                    <p class="nombre">Tarea 1</p>
-                    <p class="fechaC"></p>
-                    <p class="creacion"></p>
-                    <p class="fechaU">Última modificación:</p>
-                </div>
             </div>
         </main>
         <footer>
@@ -117,4 +122,22 @@
         <script type="text/javascript" src="js/agregarRegistros.js"></script>
         <script type="text/javascript" src="js/infoMetodos.js"></script>
     </body>
+    <%
+    } else {
+    %>
+    <html class="fail">
+        <body class="failbody">
+            <main>
+                <section class="box">
+                    <div class="inputbox">
+                        <h1>Solicitud ilegal</h1>
+                    </div>
+                    <button name="boton-continuar" id="boton-continuar" onclick="window.location.href = 'login.jsp';"><-- Regresar</button>
+                </section>
+            </main>
+        </body>
+    </html>
+    <%
+        }
+    %>
 </html>

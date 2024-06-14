@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="img/gorrito.jpeg" type="image/x-icon">
+        <link rel="icon" href="mg/gorrito.jpeg" type="image/x-icon">
         <link rel="stylesheet" href="css/inicioAStyle.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <title>Meksh - Home</title>
@@ -18,27 +18,21 @@
         <div class="navbar">
             <ul>
                 <li><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></li>
-                <li><a href="perfil.jsp"><img src="img/predeterminado.jpeg" width="50" alt="logoMeksh" class="perfil" style="margin-left: 10px; margin-right: 10px;"/><p id="usuario"><%=usuario%></p></a></li>
-                <li><a href="soporteA.jsp" style="margin-left: 200px; margin-right: 10px;">Soporte</a></li>
-                <li><a href="#ajustes" style="margin-left: 50px; margin-right: 10px;">Configuración</a></li>
-                <li><a href="inicio.jsp?logout=1" style="margin-left: 50px; margin-right: 10px;">Cerrar sesión</a></li>
+                <li><a href="perfilA.jsp"><img src="img/predeterminado.jpeg" width="50" alt="logoMeksh" class="perfil" style="margin-left: 10px; margin-right: 10px;"/><p id="usuario"><%=usuario%></p></a></li>
+                <li><a href="#Gestion" style="margin-left: 200px; margin-right: 10px;">Gestión</a></li>
+                <li><a href="soporteA.jsp" style="margin-left: 50px; margin-right: 10px;">Soporte</a></li>
+                <li><a href="inicioA.jsp?logout=1" style="margin-left: 50px; margin-right: 10px;">Cerrar sesión</a></li>
             </ul>
         </div>
-        
         <section class="container" >
-        <div class="texto1">
-            <h1>Proximamente</h1>
-        </div>
-           
+            <div class="texto1">
+                <h1>Proximamente</h1>
+            </div>
         </section>
-        <script src="js/metodoSlide.js"></script>
         <footer>
             <div class="subir">
-                <a href="#box">Ir al principio</a>
+                <a href="http://mhef.gerdoc.com">Conócenos</a>
             </div>
-            <nav>
-                
-            </nav>
             <div class="socialNetworks">
                 <ul>
                     <li>

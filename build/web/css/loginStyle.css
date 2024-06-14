@@ -8,12 +8,34 @@
 body {
     background-color: #3278AB;
     background-size: cover;
-    background-position: center center; /* Centra la imagen horizontal y verticalmente */
+    background-position: center center;
     font-family: 'Century Gothic', sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
+}
+.circle-icon {
+    position: absolute;
+    font-size: 40px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -720px;
+    margin-top: -500px;
+}
+
+.circle-icon .fa-circle {
+    color: #1E4867;
+}
+
+.number {
+    position: absolute;
+    color: white;
+    font-size: 0.5em;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
 }
 
 /*Contenedor*/
@@ -43,6 +65,10 @@ body {
 .box a:hover{
     color: #F7FF33;
     transform: scale(1.1);
+}
+.put{
+    background-color: transparent;
+    color: #fff;
 }
 .inputbox {
     position: relative;

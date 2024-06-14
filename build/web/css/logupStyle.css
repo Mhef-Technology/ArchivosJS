@@ -15,6 +15,28 @@ body {
     justify-content: center;
     height: 100vh;
 }
+.circle-icon {
+    position: absolute;
+    font-size: 40px;  /* Tamaño del ícono para un mejor visual */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -720px; /* Ajusta esto para mover a la derecha */
+    margin-top: -500px;  /* Ajusta esto para mover hacia abajo */
+}
+
+.circle-icon .fa-circle {
+    color: #1e4867; /* Color del círculo */
+}
+
+.number {
+    position: absolute;
+    color: white; /* Color del número para alta visibilidad */
+    font-size: 0.5em; /* Tamaño relativo al círculo */
+    transform: translate(-50%, -50%);
+    left: 50%; /* Centrado horizontalmente */
+    top: 50%; /* Centrado verticalmente */
+}
 
 /*Contenedor*/
 .box {
@@ -80,6 +102,9 @@ input:valid ~ label {
     padding: 0 35px 0 5px;
     color: #fff;
 }
+.inputbox .put{
+    autocomplete: off;
+}
 .inputbox ion-icon {
     position: absolute;
     right: 8px;
@@ -120,5 +145,5 @@ button {
     font-size: 1em;
     font-weight: 600;
     margin-top: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 15px;
 }

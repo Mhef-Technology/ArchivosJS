@@ -1,19 +1,30 @@
 async function guardarConjunto() {
-    const {value: nombreConjunto} = await Swal.fire({
-        title: "Ingresa el nombre del nuevo conjunto:",
-        input: "text",
-        inputPlaceholder: "Ingresa el nombre",
-        inputAttributes: {
-            maxlength: "40",
-            autocapitalize: "off",
-            autocorrect: "off"
+    const { value: formValues } = await Swal.fire({
+        title: "Ingresa el nombre del nuevo conjunto",
+        html:
+            '<input id="nombreConjunto" class="swal2-input" placeholder="Ingresa el nombre" maxlength="40">' +
+            '<div style="text-align: center;"><input type="checkbox" id="generar" style="margin-top: 25px; margin-bottom: 10px; "> Generar tarjetas mediante IA</div>',
+        focusConfirm: false,
+        preConfirm: () => {
+            return {
+                nombreConjunto: document.getElementById('nombreConjunto').value,
+                generar: document.getElementById('generar').checked
+            };
         }
     });
-    // Verifica si el nombre del conjunto está presente
+
+    if (!formValues) {
+        return;
+    }
+
+    const { nombreConjunto, generar } = formValues;
+
     if (nombreConjunto.trim() === '') {
         alert('Por favor, ingresa un nombre para el nuevo conjunto.');
-    } else {
+    } else if (!generar) {
         window.location.href = 'conjuntos.jsp?nombreConjunto=' + nombreConjunto;
+    } else {
+        generarQuiz(nombreConjunto);
     }
 }
 async function guardarTarjeta(conjunto) {
@@ -31,7 +42,7 @@ async function guardarTarjeta(conjunto) {
     if (nombreTarjeta.trim() === '') {
         alert('Por favor, ingresa una pregunta o concepto para la nueva tarjeta.');
     } else {
-        window.location.href = 'tarjetas.jsp?nombreTarjeta='+nombreTarjeta+'&conjunto='+conjunto;
+        window.location.href = 'tarjetas.jsp?nombreTarjeta=' + nombreTarjeta + '&conjunto=' + conjunto;
     }
 }
 async function guardarHoja() {
@@ -49,7 +60,7 @@ async function guardarHoja() {
     if (nombreHoja.trim() === '') {
         alert('Por favor, ingresa un título para la nueva hoja.');
     } else {
-        window.location.href = 'hojas.jsp?nombreHoja='+nombreHoja;
+        window.location.href = 'hojas.jsp?nombreHoja=' + nombreHoja;
     }
 }
 async function guardarHoja() {
@@ -67,6 +78,6 @@ async function guardarHoja() {
     if (nombreHoja.trim() === '') {
         alert('Por favor, ingresa un título para la nueva hoja.');
     } else {
-        window.location.href = 'hojas.jsp?nombreHoja='+nombreHoja;
+        window.location.href = 'hojas.jsp?nombreHoja=' + nombreHoja;
     }
 }

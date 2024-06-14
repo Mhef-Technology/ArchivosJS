@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*, conexión.conectadita" %>
+<%@page import="java.sql.*, conexion.conectadita" %>
 <!DOCTYPE html>
 <html id="box">
     <head>
@@ -10,33 +10,33 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <title>Meksh - Home</title>
     </head>
-    <body>
-        <%
-            HttpSession sesion = request.getSession();
+    <%
+        HttpSession sesion = request.getSession();
+        if (sesion.getAttribute("usu") != null) {
             String usuario = sesion.getAttribute("usu").toString();
-            String tipo = sesion.getAttribute("tipo").toString();
-        %>
+            String tema = sesion.getAttribute("tema").toString();
+    %>
+    <body class='<%=tema%>' onload="deshabilitar()">
         <div class="navbar">
             <ul>
                 <li><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></li>
                 <li><a href="perfil.jsp"><img src="img/predeterminado.jpeg" width="50" alt="logoMeksh" class="perfil" style="margin-left: 10px; margin-right: 10px;"/><p id="usuario"><%=usuario%></p></a></li>
                 <li><a href="logros.jsp">Logros</a></li>
-                <li><a href="#amigos">Amigos</a></li>
                 <li><a href="estatus.jsp">Estatus</a></li>
                 <li><a href="inicio.jsp?logout=1">Cerrar sesión</a></li>
             </ul>
         </div>
         <div class="texto1">
-            <h1>Métodos de estudio</h1>
+            Métodos de estudio
         </div>
         <div class="texto2">
-            <h3>Selecciona el método a utilizar</h3>
+            A continuación, selecciona el método a utilizar
         </div>
         <section class="container" >
             <span id="left-arrow" class="arrow">&lsaquo;</span>
             <span id="right-arrow" class="arrow">&rsaquo;</span>
             <div class="slider" id="slider">
-                <div class="box">
+                <div class="box <%=tema%>">
                     <div class="titleP">
                         <div class="imagP">
                             <img src="img/pomodoro.jpeg" width="115" height="115" alt="pomodoro"/>
@@ -49,10 +49,10 @@
                         <a href="#" onclick="metodo(1)">Información sobre el método</a>
                     </div>
                     <div class="empezarP">
-                        <a href="pomodoro.jsp" onclick="">Iniciar</a>
+                        <a href="pomodoro_inicio.jsp" onclick="">Iniciar</a>
                     </div>
                 </div>
-                <div class="box center">
+                <div class="box center <%=tema%>">
                     <div class="titleF">
                         <div class="imagF">
                             <img src="img/Flashcards.png" width="115" height="115" alt="flashcards"/>
@@ -68,7 +68,7 @@
                         <a href="conjuntos.jsp" onclick="">Iniciar</a>
                     </div>
                 </div>
-                <div class="box">
+                <div class="box <%=tema%>">
                     <div class="titleC">
                         <div class="imagC">
                             <img src="img/Cornell.png" width="115" height="115" alt="Cornell"/>
@@ -84,10 +84,9 @@
                         <a href="hojas.jsp" onclick="">Iniciar</a>
                     </div>
                 </div>
-                <div class="box dummy"></div>
+                <div class="box dummy <%=tema%>"></div>
             </div>
         </section>
-        <script src="js/metodoSlide.js"></script>
         <footer>
             <div class="subir">
                 <a href="#box">Ir al principio</a>
@@ -111,6 +110,7 @@
                         <ul>
                             <li><p class="tit2">¿Necesitas ayuda?</p></li>
                             <li><a href="soporte.jsp"><i class="fa-solid fa-headset" style="color: #ffffff; display: flex; justify-content: left; margin-left: 20px; font-size: 20px; "></i></a></li>
+                            <li><a href="chatbot.jsp"><i class="fa-solid fa-robot" style="color: #ffffff; display: flex; justify-content: left; margin-left: 20px; font-size: 20px; "></i></a></li>
                         </ul>
                     </div>
                     <div class="rightfooter">
@@ -135,17 +135,34 @@
             </div>
             <p class="fin">&copy; 2023 Mhef Technology. Todos los derechos reservados</p>
         </footer>
+        <script src="js/metodoSlide.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
         <script type="text/javascript" src="js/infoMetodos.js"></script>
-        <%
-            if (request.getParameter("logout") != null) {
-                sesion.setAttribute("tipo", null);
-                sesion.setAttribute("usu", null);
-                usuario = null;
-                tipo = null;
-                out.println("<script>document.getElementById('usuario').value = '';</script>");
-                response.sendRedirect("login.jsp");
-            }
-        %>
+        <script type="text/javascript" src="js/retroceso.js"></script>
     </body>
+    <%
+        if (request.getParameter("logout") != null) {
+            sesion.setAttribute("tipo", 0);
+            sesion.setAttribute("usu", null);
+            usuario = null;
+            out.println("<script>document.getElementById('usuario').value = '';</script>");
+            response.sendRedirect("index.html");
+        }
+    } else {
+    %>
+    <html class="fail">
+        <body class="failbody">
+            <main>
+                <section class="boxx">
+                    <div class="inputbox">
+                        <h1>Solicitud ilegal</h1>
+                    </div>
+                    <button name="boton-continuar" id="boton-continuar" onclick="window.location.href = 'login.jsp';"><-- Regresar</button>
+                </section>
+            </main>
+        </body>
+    </html>
+    <%
+        }
+    %>
 </html>

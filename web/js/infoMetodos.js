@@ -70,6 +70,12 @@ function metodo(cual) {
                 icon: "error"
             });
             break;
+        case 12:
+            Swal.fire({
+                text: "La contraseña requiere de mínimo 8 caracteres",
+                icon: "error"
+            });
+            break;
         default:
             break;
     }

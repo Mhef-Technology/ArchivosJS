@@ -1,11 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: serif;
+    font-family: "DM Sans",serif;
 }
 html, body{
-    min-width: 650px;
+    min-width: 300px;
+}
+.containerr {
+    width: 100%;
+    height: 95%;
+    position: relative;
+    top: -10px;
+    left: -4.5%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.carousel-item{
+    position: relative;
+    left: 5%;
+    justify-content: center;
+}
+
+.price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1241px;
+    height: 660px;
+    gap: 37px;
+    margin-top: 50px;
+}
+.price-card {
+    width: 35%;
+    height: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    box-shadow: 0px 2px 12px 0px #0077B5;
+    border-radius: 24px;
+    border: 1px solid #0077B5;
+}
+
+.heading {
+    text-align: center;
+}
+.heading p {
+    font-size: 16px;
+    color: #4a3aff;
+}
+.heading h2 {
+    font-size: 50px;
+    font-weight: 700;
+}
+
+.price-wrapper {
+    width: 307px;
+    margin: 40px 0;
+}
+
+.info {
+    display: flex;
+    padding: 0 18px;
+    gap: 18px;
+}
+
+.info p {
+    font-size: 8px;
+}
+
+.info .bold {
+    font-size: 24px;
+}
+
+
+.text p {
+    font-size: 18px;
+    font-weight: 400;
+    color: #6f6c90;
+    margin: 18px;
+}
+
+.details {
+    margin-top: 32px;
+}
+
+.details p {
+    font-size: 20px;
+    color: #6f6c90;
+    margin-bottom: 18px;
+}
+
+.details .bold {
+    font-size: 50px;
+    color: #000;
+    font-weight: 700;
+}
+
+.details ul li {
+    font-size: 18px;
+    margin: 16px 25px;
+    font-weight: 400;
+}
+
+
+.price-wrapper button {
+    display: flex;
+    padding: 26px 38px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 37px;
+    width: 90%;
+    height: 10px;
+    border-radius: 96px;
+    background-color: #0077B5;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+}
+
+
+.price-card:nth-child(even) {
+    background-color: #0077B5;
+    color: #fff;
+
+    & p,
+    .bold {
+        color: #fff;
+    }
+    & .price-wrapper button {
+        background-color: #fff;
+        color: #0077B5;
+    }
 }
 
 .navbar{
@@ -68,8 +202,8 @@ body {
 .box h1{
     font-size: 30px;
     letter-spacing: 4px;
-    font-weight: 100;
-    margin: 10px 0 10px;
+    font-weight: 200;
+    margin: 10px 0 20px;
 }
 .box h2{
     font-size: 15px;
@@ -79,7 +213,9 @@ body {
 }
 
 .box p {
-    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px !important;
+    font-weight: 300 !important;
     text-align: justify;
 }
 .box ul{
@@ -109,7 +245,7 @@ footer a {
     color: #fff;
     text-decoration: none;
     margin: 10px 0;
-    padding: 0 16px; 
+    padding: 0 16px;
 }
 footer a:hover {
     color: #ff9900;
@@ -221,6 +357,27 @@ footer .fin{
     .containfooter{
         margin-left: 15%;
         margin-right: 15%;
+    }
+    .price-card {
+        width: 31%;
+        height: 96%;
+    }
+    .price {
+        margin: 0;
+        width: 1300px;
+        height: 650px;
+    }
+    .price-wrapper button {
+        margin-top: 10px;
+    }
+    .details ul li {
+        margin: 6px 15px;
+    }
+    .details p {
+        margin-bottom: 8px;
+    }
+    .details {
+        margin-top: 10px;
     }
 }
 @media (max-width: 900px){

@@ -13,7 +13,7 @@ drop table if exists TipoUsuario;
 create table TipoUsuario(idTipoUsuario int primary key not null,
 						tipo_Usuario varchar(25) unique);
  
- drop table if exists RelUsuarioTipo;
+drop table if exists RelUsuarioTipo;
 create table RelUsuarioTipo(idRelUsuarioTipo int primary key not null auto_increment,
 						idUsuario int,
                         idTipoUsuario int,
@@ -26,6 +26,7 @@ create table Perfil(idPerfil int primary key not null,
                         total_Logros int,
                         estatus_Actual int,
                         estatus_Record int,
+                        tema varchar(5),
                         foreign key(idUsuario) references Usuario(idUsuario));
          
 drop table if exists Avatar;
@@ -114,7 +115,7 @@ create table Conjunto(idConjunto int primary key not null,
 drop table if exists Tarjeta;
 create table Tarjeta(idTarjeta int primary key not null,
 						idConjunto int,
-                        pregunta_Tarjeta varchar(55),
+                        pregunta_Tarjeta varchar(200),
                         respuesta_Tarjeta varchar(400),
                         foreign key(idConjunto) references Conjunto(idConjunto));
 
@@ -158,7 +159,7 @@ declare xIdPerfil int;
 	set xIdPerfil = (select ifnull(max(idPerfil),0) + 1 from Perfil);
     insert into Usuario values(xIdUsuario, nom, correo, contra);
     insert into RelUsuarioTipo values(xIdRelUsuarioTipo, xIdUsuario, 1);
-    insert into Perfil values(xIdPerfil, xIdUsuario, 0, 0, 0);
+    insert into Perfil values(xIdPerfil, xIdUsuario, 0, 0, 0, 'light');
 end;//
 delimiter ;
 
@@ -202,7 +203,7 @@ delimiter ;
 
 drop procedure if exists sp_actualizarTarjeta;
 delimiter //
-create procedure sp_actualizarTarjeta(in usu varchar(30), conjunto varchar(40), tarjeta varchar(50), titulo varchar(55), descripcion varchar(400))
+create procedure sp_actualizarTarjeta(in usu varchar(30), conjunto varchar(40), tarjeta varchar(200), titulo varchar(200), descripcion varchar(400))
 begin
 declare xIdTarjeta int;
 declare xIdConjunto int;
@@ -246,13 +247,25 @@ delimiter ;
 
 drop procedure if exists sp_agregarTarjeta;
 delimiter //
-create procedure sp_agregarTarjeta(in usu varchar(30), conjunto varchar(40), tarjeta varchar(55))
+create procedure sp_agregarTarjeta(in usu varchar(30), conjunto varchar(40), tarjeta varchar(200))
 begin
 declare xIdConjunto int;
 declare xIdTarjeta int;
 	set xIdTarjeta = (select ifnull(max(idTarjeta),0) + 1 from Tarjeta);
     set xIdConjunto = (select idConjunto from Usuario inner join Conjunto on Usuario.idUsuario = Conjunto.idUsuario where nombre_Usuario = usu and nombre_Conjunto = conjunto);
     insert into Tarjeta values(xIdTarjeta, xIdConjunto, tarjeta, '');
+end;//
+delimiter ;
+
+drop procedure if exists sp_agregarTarjeta2;
+delimiter //
+create procedure sp_agregarTarjeta2(in usu varchar(30), conjunto varchar(40), pregunta varchar(200), respuesta varchar(400))
+begin
+declare xIdConjunto int;
+declare xIdTarjeta int;
+	set xIdTarjeta = (select ifnull(max(idTarjeta),0) + 1 from Tarjeta);
+    set xIdConjunto = (select idConjunto from Usuario inner join Conjunto on Usuario.idUsuario = Conjunto.idUsuario where nombre_Usuario = usu and nombre_Conjunto = conjunto);
+    insert into Tarjeta values(xIdTarjeta, xIdConjunto, pregunta, respuesta);
 end;//
 delimiter ;
 
@@ -290,9 +303,18 @@ declare existe int;
 end;//
 delimiter ;
 
+drop procedure if exists sp_actualizarTipoUsuario;
+delimiter //
+create procedure sp_actualizarTipoUsuario(in p_idUsuario int, in p_idTipoUsuarioNuevo int)
+begin
+    update RelUsuarioTipo set idTipoUsuario = p_idTipoUsuarioNuevo where idUsuario = p_idUsuario;
+end //
+delimiter ;
+
+
 #Creación de vistas
 drop view if exists vw_searchProfile;
-create view vw_searchProfile as select nombre_Usuario, idPerfil, total_Logros, estatus_Actual, estatus_Record from Perfil inner join Usuario on Perfil.idUsuario = Usuario.idUsuario;
+create view vw_searchProfile as select nombre_Usuario, idPerfil, total_Logros, estatus_Actual, estatus_Record, tema from Perfil inner join Usuario on Perfil.idUsuario = Usuario.idUsuario;
 
 drop view if exists vw_searchAwards;
 create view vw_searchAwards as select nombre_Usuario, total_Logros, Logro.idLogro, nombre_Logro, descripcionCorta_Logro, descripcionLarga_Logro, tipo_Logro from Logro inner join RelPerfilLogro on Logro.idLogro = RelPerfilLogro.idLogro inner join Perfil on RelPerfilLogro.idPerfil = Perfil.idPerfil inner join Usuario on Perfil.idUsuario = Usuario.idUsuario;
@@ -315,8 +337,6 @@ create view vw_selectSheets as select nombre_Usuario, idHoja, nombre_Hoja, ideas
 drop view if exists vw_searchLastsTasks;
 create view vw_searchLastsTasks as select nombre_Usuario, idTarea, nombre_Tarea, fecha_Tarea, tiempo_Tarea, descripcion_Tarea from Tarea inner join Usuario on Tarea.idUsuario = Usuario.idUsuario;
 
-#Creación de transacciones
-
 #Mostrar tablas
 select * from Usuario;
 select * from TipoUsuario;
@@ -338,12 +358,7 @@ select * from Tarjeta;
 select * from Tarea;
 select * from Hoja;
 select * from MensajeSoporte;
-select * from vw_searchAwards;
-select * from vw_searchSets;
-select * from vw_searchCards;
-select * from vw_selectCards;
-select * from vw_searchSheets;
-select * from vw_selectSheets;
+select * from vw_searchProfile;
 
 #Datos predeterminados
 insert into TipoUsuario values(1, 'Base'), (2, 'Premium'), (3, 'Administrador');
@@ -358,3 +373,5 @@ call sp_agregarBase('Ferna', 'fer@gmail.com', '$2a$10$s.PAbMxyrWWqkK.6/ACQfermP9
 update RelUsuarioTipo set idTipoUsuario = 3 where idUsuario = 1;
 call sp_agregarBase('Nateyla', 'nataponi276@gmail.com', '$2a$10$uhrqgJ8WLJGGPvWfz4M.jOJwKkcWuk42ct6h2At71i3GPPhnyi6oW');
 update RelUsuarioTipo set idTipoUsuario = 3 where idUsuario = 2;
+
+SHOW VARIABLES LIKE 'character_set_database';

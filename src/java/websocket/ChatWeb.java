@@ -2,7 +2,7 @@ package websocket;
 
 import javax.websocket.*;
 import javax.websocket.server.*;
-import conexión.conectadita;
+import conexion.conectadita;
 import java.io.*;
 import java.sql.*;
 import java.util.*;

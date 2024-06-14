@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*, conexión.conectadita" %>
+<%@page import="java.sql.*, conexion.conectadita" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,24 +14,26 @@
     <body>
         <%
             HttpSession sesion = request.getSession();
-            String usuario = sesion.getAttribute("usu").toString();
-            Connection con = null;
-            PreparedStatement pstmt = null;
-            ResultSet rst = null;
-            conectadita conect = new conectadita();
-            con = conect.getConnection();
-            String newName = "";
-            if (request.getParameter("nombreHoja") != null) {
-                newName = request.getParameter("nombreHoja");
-                CallableStatement cstmt = con.prepareCall("call sp_agregarHoja(?,?)");
-                cstmt.setString(1, usuario);
-                cstmt.setString(2, newName);
-                cstmt.execute();
-                ResultSet rst2 = cstmt.getResultSet();
-                rst2.next();
-                if (rst2.getString("mensaje").equals("n")) {
+            if (sesion.getAttribute("usu") != null) {
+                String usuario = sesion.getAttribute("usu").toString();
+                String tema = sesion.getAttribute("tema").toString();
+                Connection con = null;
+                PreparedStatement pstmt = null;
+                ResultSet rst = null;
+                conectadita conect = new conectadita();
+                con = conect.getConnection();
+                String newName = "";
+                if (request.getParameter("nombreHoja") != null) {
+                    newName = request.getParameter("nombreHoja");
+                    CallableStatement cstmt = con.prepareCall("call sp_agregarHoja(?,?)");
+                    cstmt.setString(1, usuario);
+                    cstmt.setString(2, newName);
+                    cstmt.execute();
+                    ResultSet rst2 = cstmt.getResultSet();
+                    rst2.next();
+                    if (rst2.getString("mensaje").equals("n")) {
         %>
-    <body onload="metodo(10)">
+    <body onload="metodo(10)" class="<%=tema%>">
         <%
         } else if (rst2.getString("mensaje").equals("s")) {
             CallableStatement cstmt2 = con.prepareCall("call sp_agregarLogros(?,?)");
@@ -42,15 +44,15 @@
             rst3.next();
             if (rst3.getString("mensaje").equals("s")) {
         %>
-    <body onload="logro(3, 1)">
+    <body onload="logro(3, 1)" class="<%=tema%>">
         <%
         } else if (rst3.getString("mensaje").equals("n")) {
         %>
-    <body onload="metodo(4)">
+    <body onload="metodo(4)" class="<%=tema%>">
         <%
         } else if (rst3.getString("mensaje").equals("x")) {
         %>
-    <body onload="logro(3, 2)">
+    <body onload="logro(3, 2)" class="<%=tema%>">
         <%
                 }
                 cstmt2.close();
@@ -58,7 +60,7 @@
             cstmt.close();
         } else {
         %>
-    <body>
+    <body class="<%=tema%>">
         <%
             }
 
@@ -72,12 +74,15 @@
                     <li><a href="inicio.jsp" title="Ir al Inicio"><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></a></li>
                     <li><a href="perfil.jsp"><img src="img/predeterminado.jpeg" width="50" alt="logoMeksh" class="perfil" style="margin-left: 10px; margin-right: 10px;"/><p id="usuario"><%=usuario%></p></a></li>
                     <li><a href="logros.jsp">Logros</a></li>
-                    <li><a href="#amigos">Amigos</a></li>
                     <li><a href="estatus.jsp">Estatus</a></li>
                     <li><a href="inicio.jsp?logout=1">Cerrar sesión</a></li>
                 </ul>
             </div>
         </header>
+        <div class="container">
+            <div class="texto">Hojas de Apuntes</div>
+            <button class="save" onclick="cambiarPagina()"><h3>Información extra</h3></button>
+        </div>
         <div class="all">
             <table class="all2">
                 <tr class="fila 1">
@@ -142,6 +147,7 @@
                 </tr>
             </table>
         </div>
+
         <footer>
             <div class="subir">
                 <a href="#box">Ir al principio</a>
@@ -185,8 +191,31 @@
             </div>
             <p class="fin">&copy; 2023 Mhef Technology. Todos los derechos reservados</p>
         </footer>
+        <script>
+            function cambiarPagina() {
+                window.location.href = 'info.jsp';
+            }
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
         <script type="text/javascript" src="js/agregarRegistros.js"></script>
         <script type="text/javascript" src="js/infoMetodos.js"></script>
     </body>
+    <%
+    } else {
+    %>
+    <html class="fail">
+        <body class="failbody">
+            <main>
+                <section class="box">
+                    <div class="inputbox">
+                        <h1>Solicitud ilegal</h1>
+                    </div>
+                    <button name="boton-continuar" id="boton-continuar" onclick="window.location.href = 'login.jsp';"><-- Regresar</button>
+                </section>
+            </main>
+        </body>
+    </html>
+    <%
+        }
+    %>
 </html>

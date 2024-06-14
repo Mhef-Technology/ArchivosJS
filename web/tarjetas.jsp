@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*, conexión.conectadita" %>
+<%@page import="java.sql.*, conexion.conectadita" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,33 +13,35 @@
     </head>
     <body>
         <%
-            String conjunto = request.getParameter("conjunto");
             HttpSession sesion = request.getSession();
-            String usuario = sesion.getAttribute("usu").toString();
-            Connection con = null;
-            PreparedStatement pstmt = null;
-            ResultSet rst = null;
-            conectadita conect = new conectadita();
-            con = conect.getConnection();
-            String newName = "";
+            if (sesion.getAttribute("usu") != null) {
+                String conjunto = request.getParameter("conjunto");
+                String usuario = sesion.getAttribute("usu").toString();
+                String tema = sesion.getAttribute("tema").toString();
+                Connection con = null;
+                PreparedStatement pstmt = null;
+                ResultSet rst = null;
+                conectadita conect = new conectadita();
+                con = conect.getConnection();
+                String newName = "";
 
-            if (request.getParameter("nombreTarjeta") != null) {
-                newName = request.getParameter("nombreTarjeta");
-                CallableStatement cstmt = con.prepareCall("call sp_agregarTarjeta(?,?,?)");
-                cstmt.setString(1, usuario);
-                cstmt.setString(2, conjunto);
-                cstmt.setString(3, newName);
-                cstmt.executeUpdate();
+                if (request.getParameter("nombreTarjeta") != null) {
+                    newName = request.getParameter("nombreTarjeta");
+                    CallableStatement cstmt = con.prepareCall("call sp_agregarTarjeta(?,?,?)");
+                    cstmt.setString(1, usuario);
+                    cstmt.setString(2, conjunto);
+                    cstmt.setString(3, newName);
+                    cstmt.executeUpdate();
         %>
-    <body onload="metodo(4)">
+    <body onload="metodo(4)" class="<%=tema%>">
         <%
         } else {
         %>
-    <body>
+    <body class="<%=tema%>">
         <%
             }
 
-            pstmt = con.prepareStatement("select * from vw_searchCards where nombre_Usuario = ? and nombre_Conjunto = ?");
+            pstmt = con.prepareStatement("select nombre_Usuario, nombre_Conjunto, pregunta_Tarjeta from Tarjeta inner join Conjunto on Tarjeta.idConjunto = Conjunto.idConjunto inner join Usuario on Conjunto.idUsuario = Usuario.idUsuario where nombre_Usuario = ? and nombre_Conjunto = ?;");
             pstmt.setString(1, usuario);
             pstmt.setString(2, conjunto);
             rst = pstmt.executeQuery();
@@ -50,66 +52,76 @@
                     <li><a href="conjuntos.jsp" title="Ir a los conjuntos"><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></a></li>
                     <li><a href="perfil.jsp"><img src="img/predeterminado.jpeg" width="50" alt="logoMeksh" class="perfil" style="margin-left: 10px; margin-right: 10px;"/><p id="usuario"><%=usuario%></p></a></li>
                     <li><a href="logros.jsp">Logros</a></li>
-                    <li><a href="#amigos">Amigos</a></li>
                     <li><a href="estatus.jsp">Estatus</a></li>
                     <li><a href="inicio.jsp?logout=1">Cerrar sesión</a></li>
                 </ul>
             </div>
         </header>
-        <div class="all">
-            <table class="all2">
-                <tr class="fila 1">
-                    <td>
-                        <a href="#" title="Crear un nueva tarjeta en <%=conjunto%>" class="agregar">
-                            <div class="card add"  onclick="guardarTarjeta('<%=conjunto%>')">
-                                <img src="img/plus-1270001_1280.png" width="80" height="80" alt="alt"/>
-                            </div>
-                        </a>
-                    </td>
-                    <%
-                        int fila = 1;
-                        int columna = 2;
-                        int totTarjetas = 0;
-                        while (rst.next()) {
-                            if (columna >= 2 && columna <= 4) {
-                                totTarjetas++;
-                    %>
-                    <td>
-                        <a href="flashcard.jsp?conjunto=<%=conjunto%>&tarjeta=<%=rst.getString("pregunta_Tarjeta")%>" title="Abrir tarjeta" class="abrir <%=rst.getString("pregunta_Tarjeta")%>">
-                            <div class="card <%=totTarjetas%>">
-                                <p class="pregunta"><%=rst.getString("pregunta_Tarjeta")%></p>
-                            </div>
-                        </a>
-                    </td>
-                    <%
-                        if (columna == 4) {
-                    %>
-                </tr>
-                <%
-                        columna = 1;
-                    } else {
-                        columna++;
-                    }
-                } else if (columna == 1) {
-                    columna++;
-                    totTarjetas++;
-                    fila++;
-                %>
-                <tr class="fila <%=fila%>">
-                    <td>
-                        <a href="flashcard.jsp?conjunto=<%=conjunto%>&tarjeta=<%=rst.getString("pregunta_Tarjeta")%>" title="Abrir tarjeta" class="abrir <%=rst.getString("pregunta_Tarjeta")%>">
-                            <div class="card <%=totTarjetas%>">
-                                <p class="pregunta"><%=rst.getString("pregunta_Tarjeta")%></p>
-                            </div>
-                        </a>
-                    </td>
-                    <%
+        <main>
+            <div class="container">
+                <div class="texto">Tarjetas de Memoria</div>
+                <button class="boton" onclick="redirigirAPagina()">
+                    <h2> Juegos </h2> 
+                </button>
+                <div class="all">
+                    <table class="all2">
+                        <tr class="fila 1">
+                            <td>
+                                <a href="#" title="Crear un nueva tarjeta en <%=conjunto%>" class="agregar">
+                                    <div class="card <%=tema%> add"  onclick="guardarTarjeta('<%=conjunto%>')">
+                                        <img src="img/plus-1270001_1280.png" width="80" height="80" alt="alt"/>
+                                    </div>
+                                </a>
+                            </td>
+                        <div id="tasksContainer"></div>
+
+                        <%
+                            int fila = 1;
+                            int columna = 2;
+                            int totTarjetas = 0;
+                            while (rst.next()) {
+                                if (columna >= 2 && columna <= 4) {
+                                    totTarjetas++;
+                        %>
+                        <td>
+                            <a href="flashcard.jsp?conjunto=<%=conjunto%>&tarjeta=<%=rst.getString("pregunta_Tarjeta")%>" title="Abrir tarjeta" class="abrir <%=rst.getString("pregunta_Tarjeta")%>">
+                                <div class="card <%=tema%> <%=totTarjetas%>">
+                                    <p class="pregunta"><%=rst.getString("pregunta_Tarjeta")%></p>
+                                </div>
+                            </a>
+                        </td>
+                        <%
+                            if (columna == 4) {
+                        %>
+                        </tr>
+                        <%
+                                columna = 1;
+                            } else {
+                                columna++;
                             }
-                        }
-                    %>
-                </tr>
-            </table>
-        </div>
+                        } else if (columna == 1) {
+                            columna++;
+                            totTarjetas++;
+                            fila++;
+                        %>
+                        <tr class="fila <%=fila%>">
+                            <td>
+                                <a href="flashcard.jsp?conjunto=<%=conjunto%>&tarjeta=<%=rst.getString("pregunta_Tarjeta")%>" title="Abrir tarjeta" class="abrir <%=rst.getString("pregunta_Tarjeta")%>">
+                                    <div class="card <%=tema%> <%=totTarjetas%>">
+                                        <p class="pregunta"><%=rst.getString("pregunta_Tarjeta")%></p>
+                                    </div>
+                                </a>
+                            </td>
+                            <%
+                                    }
+                                }
+                            %>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </main>
         <footer>
             <div class="subir">
                 <a href="#box">Ir al principio</a>
@@ -151,10 +163,34 @@
                     </li>
                 </ul>
             </div>
+
             <p class="fin">&copy; 2023 Mhef Technology. Todos los derechos reservados</p>
         </footer>
+        <script>
+            function redirigirAPagina() {
+                window.location.href = 'juegos.jsp';
+            }
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
         <script type="text/javascript" src="js/agregarRegistros.js"></script>
         <script type="text/javascript" src="js/infoMetodos.js"></script>
     </body>
+    <%
+    } else {
+    %>
+    <html class="fail">
+        <body class="failbody">
+            <main>
+                <section class="box">
+                    <div class="inputbox">
+                        <h1>Solicitud ilegal</h1>
+                    </div>
+                    <button name="boton-continuar" id="boton-continuar" onclick="window.location.href = 'login.jsp';"><-- Regresar</button>
+                </section>
+            </main>
+        </body>
+    </html>
+    <%
+        }
+    %>
 </html>

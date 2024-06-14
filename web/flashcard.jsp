@@ -1,5 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page import="java.sql.*, conexión.conectadita" %>
+<%@page import="java.sql.*, conexion.conectadita" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,39 +7,41 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" href="img/meksh-removebg-preview.png" type="image/x-icon">
         <link rel="stylesheet" href="css/flashcardStyle.css">
-        <link rel="stylesheet" href="ruta/a/font-awesome.min.css"> <!-- Si has descargado los archivos localmente -->
+        <link rel="stylesheet" href="ruta/a/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <%
-            String conjunto = request.getParameter("conjunto");
-            String tarjeta = request.getParameter("tarjeta");
-            String title = request.getParameter("titleCard");
-            String description = request.getParameter("descriptionCard");
             HttpSession sesion = request.getSession();
-            String usuario = sesion.getAttribute("usu").toString();
-            Connection con = null;
-            PreparedStatement pstmt = null;
-            ResultSet rst = null;
-            conectadita conect = new conectadita();
-            con = conect.getConnection();
-            if (request.getParameter("save") != null) {
-                CallableStatement cstmt = con.prepareCall("call sp_actualizarTarjeta(?,?,?,?,?)");
-                cstmt.setString(1, usuario);
-                cstmt.setString(2, conjunto);
-                cstmt.setString(3, tarjeta);
-                cstmt.setString(4, title);
-                cstmt.setString(5, description);
-                cstmt.executeUpdate();
-                tarjeta = title;
+            if (sesion.getAttribute("usu") != null) {
+                String conjunto = request.getParameter("conjunto");
+                String tarjeta = request.getParameter("tarjeta");
+                String title = request.getParameter("titleCard");
+                String description = request.getParameter("descriptionCard");
+                String usuario = sesion.getAttribute("usu").toString();
+                String tema = sesion.getAttribute("tema").toString();
+                Connection con = null;
+                PreparedStatement pstmt = null;
+                ResultSet rst = null;
+                conectadita conect = new conectadita();
+                con = conect.getConnection();
+                if (request.getParameter("save") != null) {
+                    CallableStatement cstmt = con.prepareCall("call sp_actualizarTarjeta(?,?,?,?,?)");
+                    cstmt.setString(1, usuario);
+                    cstmt.setString(2, conjunto);
+                    cstmt.setString(3, tarjeta);
+                    cstmt.setString(4, title);
+                    cstmt.setString(5, description);
+                    cstmt.executeUpdate();
+                    tarjeta = title;
         %>
         <title>Meksh - <%=tarjeta%></title>
     </head>
-    <body onload="metodo(9)">
+    <body onload="metodo(9)" class="<%=tema%>">
         <%
         } else {
         %>
         <title>Meksh - <%=tarjeta%></title>
     </head>
-<body>
+<body class="<%=tema%>">
     <%
         }
 
@@ -57,7 +59,6 @@
                 <li><a href="tarjetas.jsp?conjunto=<%=conjunto%>" title="Ir al listado de tarjetas"><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></a></li>
                 <li><a href="perfil.jsp"><img src="img/predeterminado.jpeg" width="50" alt="logoMeksh" class="perfil" style="margin-left: 10px; margin-right: 10px;"/><p id="usuario"><%=usuario%></p></a></li>
                 <li><a href="logros.jsp">Logros</a></li>
-                <li><a href="#amigos">Amigos</a></li>
                 <li><a href="estatus.jsp">Estatus</a></li>
                 <li><a href="inicio.jsp?logout=1">Cerrar sesión</a></li>
             </ul>
@@ -99,6 +100,11 @@
                 </div>
                 <div class="centerfooter">
                     <div class="help"><p class="tit1">Ayuda</p></div>
+                    <ul>
+                        <li><p class="tit2">¿Necesitas ayuda?</p></li>
+                        <li><a href="soporte.jsp"><i class="fa-solid fa-headset" style="color: #ffffff; display: flex; justify-content: left; margin-left: 20px; font-size: 20px; "></i></a></li>
+                        <li><a href="chatbot.jsp"><i class="fa-solid fa-robot" style="color: #ffffff; display: flex; justify-content: left; margin-left: 20px; font-size: 20px; "></i></a></li>
+                    </ul>
                 </div>
                 <div class="rightfooter">
                     <div class="contact" id="contacto"><p class="tit1">Contacto</p></div>
@@ -132,4 +138,24 @@
         }
     %>
 </body>
+<%
+} else {
+%>
+<title>Meksh - Flashcards</title>
+</head>
+<html class="fail">
+    <body class="failbody">
+        <main>
+            <section class="box">
+                <div class="inputbox">
+                    <h1>Solicitud ilegal</h1>
+                </div>
+                <button name="boton-continuar" id="boton-continuar" onclick="window.location.href = 'login.jsp';"><-- Regresar</button>
+            </section>
+        </main>
+    </body>
+</html>
+<%
+    }
+%>
 </html>

@@ -242,6 +242,9 @@ html,body{
 .navbar li a:hover {
     text-decoration: underline;
 }
+.perfil{
+    border-radius: 25px;
+}
 
 /*Perfil*/
 main {

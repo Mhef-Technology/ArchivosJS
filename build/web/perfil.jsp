@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,105 +9,128 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
         <title>Meksh - Perfil</title>
     </head>
-<%@ page import="javax.servlet.http.*" %>
-<%@ page import="java.io.*" %>
-<%
+    <%@ page import="javax.servlet.http.*" %>
+    <%@ page import="java.sql.*, conexion.conectadita" %>
+    <%@ page import="java.io.*" %>
+    <%
+        java.util.Date currentDate = new java.util.Date();
+        HttpSession sesion = request.getSession();
+        if (sesion.getAttribute("usu") != null) {
+            String usuario = null;
+            int tipo = 0;
+            String tema = null;
+            Cookie loginCountCookie = null;
+            Cookie lastLoginCookie = null;
+            String firstLoginDate = null;
 
-        // Obtiene la fecha actual
-    java.util.Date currentDate = new java.util.Date();
-      // Declarar las variables fuera del bloque try-catch
-    HttpSession sesion = null;
-    String usuario = null;
-    String tipo = null;
-    Cookie loginCountCookie = null;
-    Cookie lastLoginCookie = null;
-    String firstLoginDate = null; // Declarar aquí para que esté en el mismo ámbito
+            int loginCount = 1;
 
-    int loginCount = 1; // Declarar e inicializar fuera del bloque try-catch
+            try {
+                usuario = (sesion.getAttribute("usu") != null) ? sesion.getAttribute("usu").toString() : "";
+                tipo = (Integer) sesion.getAttribute("tipo");
+                tema = (sesion.getAttribute("tema") != null) ? sesion.getAttribute("tema").toString() : "";
 
-    try {
-        sesion = request.getSession();
-        usuario = (sesion.getAttribute("usu") != null) ? sesion.getAttribute("usu").toString() : "";
-        tipo = (sesion.getAttribute("tipo") != null) ? sesion.getAttribute("tipo").toString() : "";
-
-
-        // Define el nombre de la cookie para la fecha del último inicio de sesión
-        String lastLoginCookieName = "lastLogin";
-
-        // Define el nombre de la cookie para el contador de días consecutivos de inicio de sesión
-        String loginCountCookieName = "loginCount";
-
-        // Actualiza la cookie de la fecha del último inicio de sesión (si no existe)
-        if (request.getParameter("logout") == null) {
-            lastLoginCookie = new Cookie(lastLoginCookieName, currentDate.toString());
-            lastLoginCookie.setMaxAge(24 * 60 * 60); // Expira en 24 horas
-            response.addCookie(lastLoginCookie); // Agrega la cookie a la respuesta
-        }
-
-        // Actualiza el contador de días consecutivos de inicio de sesión (si no existe)
-        Cookie[] existingCookies = request.getCookies();
-        if (existingCookies != null) {
-            for (Cookie existingCookie : existingCookies) {
-                if (loginCountCookieName.equals(existingCookie.getName())) {
-                    loginCount = Integer.parseInt(existingCookie.getValue()) + 1;
-                    break;
+                if (request.getParameter("nuevoModo") != null) {
+                    String checks = request.getParameter("toggle");
+                    Connection con = null;
+                    PreparedStatement pstmt = null;
+                    if (checks != null && tema.equals("light")) {
+                        sesion.setAttribute("tema", "dark");
+                        tema = "dark";
+                        conectadita conect = new conectadita();
+                        con = conect.getConnection();
+                        pstmt = con.prepareStatement("update Perfil inner join Usuario on Usuario.idUsuario = Perfil.idUsuario set tema = 'dark' where nombre_Usuario = '" + usuario + "'");
+                        pstmt.executeUpdate();
+                    } else if (checks == null && tema.equals("dark")) {
+                        sesion.setAttribute("tema", "light");
+                        tema = "light";
+                        conectadita conect = new conectadita();
+                        con = conect.getConnection();
+                        pstmt = con.prepareStatement("update Perfil inner join Usuario on Usuario.idUsuario = Perfil.idUsuario set tema = 'light' where nombre_Usuario = '" + usuario + "'");
+                        pstmt.executeUpdate();
+                    }
                 }
-            }
-        }
-        loginCountCookie = new Cookie(loginCountCookieName, String.valueOf(loginCount));
-        loginCountCookie.setMaxAge(24 * 60 * 60); // Expira en 24 horas
-        response.addCookie(loginCountCookie); // Agrega la cookie a la respuesta
 
-        // Obtiene la fecha del primer inicio de sesión
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (lastLoginCookieName.equals(cookie.getName())) {
-                    firstLoginDate = cookie.getValue();
-                    break;
+                String lastLoginCookieName = "lastLogin";
+
+                String loginCountCookieName = "loginCount";
+
+                if (request.getParameter("logout") == null) {
+                    lastLoginCookie = new Cookie(lastLoginCookieName, currentDate.toString());
+                    lastLoginCookie.setMaxAge(24 * 60 * 60); // Expira en 24 horas
+                    response.addCookie(lastLoginCookie); // Agrega la cookie a la respuesta
                 }
+
+                Cookie[] existingCookies = request.getCookies();
+                if (existingCookies != null) {
+                    for (Cookie existingCookie : existingCookies) {
+                        if (loginCountCookieName.equals(existingCookie.getName())) {
+                            loginCount = Integer.parseInt(existingCookie.getValue()) + 1;
+                            break;
+                        }
+                    }
+                }
+                loginCountCookie = new Cookie(loginCountCookieName, String.valueOf(loginCount));
+                loginCountCookie.setMaxAge(24 * 60 * 60);
+                response.addCookie(loginCountCookie);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                out.println("Excepción: " + e.getMessage());
             }
-        }
-        // Resto del código...
-    } catch (Exception e) {
-        e.printStackTrace();
-        out.println("Excepción: " + e.getMessage());
-    }
-%>
+            String estatusText = "Básico";
+            if (tipo == 2) {
+                estatusText = "Premium";
+            } else {
+                estatusText = "Básico";
+            }
+    %>
 
-
-    <body>
+    <body class="<%=tema%>" onload="active('<%=tema%>')">
         <header>
             <div class="navbar">
                 <ul>
                     <li><a href="inicio.jsp" title="Ir al Inicio"><img src="img/logoMeksh.jpg" height="60" alt="logoMeksh" style="margin-left: 20px; margin-right: 5px;"/></a></li>
                     <li><a href="logros.jsp">Logros</a></li>
-                    <li><a href="#amigos">Amigos</a></li>
                     <li><a href="estatus.jsp">Estatus</a></li>
                     <li><a href="inicio.jsp?logout=1">Cerrar sesión</a></li>
                 </ul>
             </div>
         </header>
-        <main>
+        <main class="<%=tema%>">
             <section class="box">
                 <div class="profile">
-                    <div class="banner">
-                       
-                    </div>
+                    <div class="banner"></div>
                     <div class="avatar" style="background-image: url('img/predeterminado.jpeg');">
+                        <div class="nombre"><%=usuario%></div>
                     </div>
                     <div class="content">
-                        <div class="racha-container">
-                        <div class="racha-circle" id="contador"><%= loginCount %></div>
-                        <div class="day">Streak</div>
-                        <div class="flame">&#128293;</div>
+                        <div class="infoPerfil">
+                            <div class="racha-container">
+                                <div class="racha-circle <%=tema%>" id="contador"><%= loginCount%></div>
+                                <div class="day">Streak</div>
+                                <div class="flame">&#128293;</div>
+                            </div>
+                            <div class="textinicio">
+                                <p>Último inicio de sesión: <%= lastLoginCookie != null ? lastLoginCookie.getValue() : "N/A"%></p>
+                                <p>Plan: <%= estatusText%></p>
+                            </div>
                         </div>
-                        <div class="textinicio">
-                        <p>Último inicio de sesión: <%= lastLoginCookie != null ? lastLoginCookie.getValue() : "N/A" %></p>
+                        <div class="confPerfil">
+                            <form action="perfil.jsp?nuevoModo=1" method="post">
+                                <div class="modo">
+                                    <input type="checkbox" id="toggle" name='toggle' class="offscreen"/>
+                                    <label for="toggle" class="switch" onclick="cambio()"></label>
+                                </div>
+                                <div class="textModo">
+                                    <p>Modo oscuro</p>
+                                </div>
+                                <div class="aceptarModo">
+                                    <button class="btn-aceptar">Aceptar</button>
+                                </div>
+                            </form>
                         </div>
-                            
                     </div>
-                    
                 </div>
             </section>
         </main>
@@ -132,6 +154,11 @@
                     </div>
                     <div class="centerfooter">
                         <div class="help">Ayuda</div>
+                        <ul>
+                            <li><p class="tit2">¿Necesitas ayuda?</p></li>
+                            <li><a href="soporte.jsp"><i class="fa-solid fa-headset" style="color: #ffffff; display: flex; justify-content: left; margin-left: 20px; font-size: 20px; "></i></a></li>
+                            <li><a href="chatbot.jsp"><i class="fa-solid fa-robot" style="color: #ffffff; display: flex; justify-content: left; margin-left: 20px; font-size: 20px; "></i></a></li>
+                        </ul>
                     </div>
                     <div class="rightfooter">
                         <div class="contact">Contacto</div>
@@ -155,27 +182,22 @@
             </div>
             <p class="fin">&copy; 2023 Mhef Technology. Todos los derechos reservados</p>
         </footer>
+        <script src="js/cambioModo.js"></script>
     </body>
     <%
-        // Lógica para cerrar sesión
         if (request.getParameter("logout") != null) {
             try {
-                // ... (Código existente para cerrar sesión)
-
-                // Resto del código para cerrar sesión
-                sesion.setAttribute("tipo", null);
+                sesion.setAttribute("tipo", 0);
                 sesion.setAttribute("usu", null);
                 usuario = null;
-                tipo = null;
+                tipo = 0;
                 out.println("<script>document.getElementById('usuario').value = '';</script>");
 
-                // Redirige al usuario después de cerrar sesión
                 response.sendRedirect("login.jsp");
             } catch (Exception e) {
                 e.printStackTrace();
             }
         } else {
-            // Añade las cookies a la respuesta
             try {
                 if (lastLoginCookie != null) {
                     response.addCookie(lastLoginCookie);
@@ -184,6 +206,22 @@
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    } else {
+    %>
+    <html class="fail">
+        <body class="failbody">
+            <main>
+                <section class="boxx">
+                    <div class="inputbox">
+                        <h1>Solicitud ilegal</h1>
+                    </div>
+                    <button name="boton-continuar" id="boton-continuar" onclick="window.location.href = 'login.jsp';"><-- Regresar</button>
+                </section>
+            </main>
+        </body>
+    </html>
+    <%
         }
     %>
 </html>

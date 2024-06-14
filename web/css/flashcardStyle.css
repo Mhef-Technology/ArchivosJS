@@ -8,6 +8,12 @@
 html,body{
     min-width: 930px;
 }
+html .light{
+    background-color: white;
+}
+html .dark{
+    background-color: #2C4C68;
+}
 
 /*Barra de navegación*/
 .navbar{
@@ -16,7 +22,12 @@ html,body{
     top: 0;
     width: 100%;
     z-index: 100;
+}
+.light .navbar {
     border-bottom: 2px #326192 solid;
+}
+.dark .navbar{
+    border-bottom: 2px #B1ECFF solid;
 }
 .navbar ul {
     list-style-type: none;
@@ -49,7 +60,7 @@ html,body{
     border-radius: 25px;
 }
 
-/*Hoja*/
+/*Flashcard*/
 main{
     display: flex;
     justify-content: center;
@@ -65,7 +76,6 @@ main{
 }
 .tituloCard{
     grid-area: titleCard;
-    background-color: #E0A141;
     border-radius: 8px;
 }
 .descripcion{
@@ -79,7 +89,6 @@ main{
 }
 .descripcionCard{
     grid-area: descCard;
-    background-color: #E0A141;
     border-radius: 8px;
 }
 .titleCard{
@@ -87,7 +96,6 @@ main{
     padding: 25px;
     text-align: center;
     vertical-align: middle;
-    background-color: #E0A141;
     border-radius: 8px;
     resize: none;
     height: 100%;
@@ -99,7 +107,6 @@ main{
     padding: 25px;
     text-align: center;
     vertical-align: middle;
-    background-color: #E0A141;
     border-radius: 8px;
     resize: none;
     height: 100%;
@@ -119,13 +126,18 @@ main{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 34px;
-    width: 158px;
-    padding: 15px;
     font-size: 18px;
-    border-radius: 17px;
-    border-color: #3278AB;
+    height: 44px;
+    width: 168px;
+    padding: 15px;
+    background: #0077B5;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+}
+.save:disabled {
+    background: #ccc;
 }
 .question{
     height: 34px;
@@ -154,7 +166,6 @@ main{
     position: relative;
     z-index: 1;
     border-radius: 10px;
-    background-color: #FFED85;
     box-shadow: 4px 4px 8px  rgb(89 73 100);
     transition: opacity 0.3s ease-in;
     align-self: center;
@@ -164,6 +175,66 @@ main{
         "titleCard"
         "desc"
         "descCard"
+}
+.light .card{
+    background-color: #FFED85;
+}
+.dark .card{
+    background-color: #95CCFF;
+}
+.light .titleCard, .light .descriptionCard{
+    background-color: #E0A141;
+}
+.dark .titleCard, .dark .descriptionCard{
+    background-color: #CDE5FF;
+}
+
+/*Contenedor*/
+.fail, .failbody{
+    min-width: 500px;
+    height: 100vh;
+}
+.failbody main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3278AB;
+    height: 100vh;
+}
+.box {
+    width: 460px;
+    height: 220px;
+    background: rgba(0,0,0,.4);
+    padding: 20px;
+    padding-bottom: 30px;
+    color: white;
+    text-align: center;
+    border-radius: 15px;
+}
+.box h1{
+    font-size: 30px;
+    letter-spacing: 4px;
+    font-weight: 100;
+    margin: 15px 0 20px;
+}
+.inputbox {
+    position: relative;
+    margin: 25px 30px;
+    width: 360px;
+    border-bottom: 2px solid #fff;
+}
+.failbody button {
+    width: 360px;
+    height: 40px;
+    border-radius: 40px;
+    background: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 15px;
 }
 
 /*Pie de página*/
@@ -256,6 +327,11 @@ footer p{
     margin-left: 5px;
     margin-right: 5px;
     font-size: 12px;
+}
+.fa-robot{
+    position: relative;
+    top: -20px;
+    left: 40px;
 }
 .socialNetworks{
     display: grid;
